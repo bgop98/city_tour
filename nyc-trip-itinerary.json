@@ -2004,21 +2004,25 @@
     ],
     "4": [
       {
-        "label": "West Side spine: High Line, Chelsea, Intrepid, West Village",
+        "label": "West Side spine: Chelsea, High Line northbound, Intrepid, West Village",
         "mode": "subway",
-        "estimate": "Morning High Line/Chelsea is mostly walking; Chelsea to Intrepid is 20-30 min by bus/walk; West Village back to hotel: 20-30 min.",
+        "estimate": "Morning Little Island/Chelsea/High Line is mostly walking south-to-north; Hudson Yards to Intrepid is 15-25 min by bus/walk; West Village back to hotel: 20-30 min.",
         "coords": [
           [
             40.7552,
             -73.9941
           ],
           [
-            40.754,
-            -74.002
+            40.742,
+            -74.0102
           ],
           [
             40.7424,
             -74.006
+          ],
+          [
+            40.754,
+            -74.002
           ],
           [
             40.7645,
@@ -2275,8 +2279,8 @@
         ]
       },
       {
-        "time": "Lunch",
-        "title": "Meat-friendly lunch options near AMNH / UWS",
+        "time": "15:00 late lunch",
+        "title": "Late lunch options near AMNH / UWS",
         "refs": [
           "jacobs_pickles",
           "pastrami_queen_uws"
@@ -2310,15 +2314,15 @@
         ]
       },
       {
-        "time": "Morning",
-        "title": "Leave Midtown for Battery Park and Liberty ferry",
+        "time": "09:00-10:00",
+        "title": "Leave Midtown for Battery Park and 10:00 Liberty ferry",
         "refs": [
           "battery_park",
           "castle_clinton"
         ]
       },
       {
-        "time": "Ticketed slot",
+        "time": "10:00 ferry",
         "title": "Liberty Island short visit",
         "refs": [
           "liberty_island"
@@ -2364,21 +2368,23 @@
     ],
     "4": [
       {
-        "time": "09:00-11:30",
-        "title": "Hudson Yards and High Line while it is cooler",
+        "time": "09:00-10:30",
+        "title": "Little Island, Pier 57, and Chelsea Market while it is cooler",
         "refs": [
-          "hudson_yards",
-          "vessel",
-          "high_line"
-        ]
-      },
-      {
-        "time": "11:30-12:20",
-        "title": "Chelsea Market lunch options",
-        "refs": [
+          "little_island",
+          "pier_57",
           "chelsea_market",
           "los_tacos_chelsea",
           "dicksons_farmstand"
+        ]
+      },
+      {
+        "time": "10:30-12:20",
+        "title": "High Line northbound to Hudson Yards",
+        "refs": [
+          "high_line",
+          "hudson_yards",
+          "vessel"
         ]
       },
       {
@@ -2390,12 +2396,12 @@
       },
       {
         "time": "16:00-18:30",
-        "title": "Waterfront, Little Island, and Meatpacking",
+        "title": "Hudson River Park, Hell's Kitchen reset, or West Village transfer",
         "refs": [
-          "little_island",
-          "pier_57",
           "hudson_river_park",
-          "meatpacking"
+          "hells_kitchen",
+          "west_village",
+          "greenwich_village"
         ]
       },
       {
