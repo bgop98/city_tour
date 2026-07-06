@@ -1,0 +1,2018 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NYC Trip Map - July 23-31, 2026</title>
+  <link
+    rel="stylesheet"
+    href="vendor/leaflet/leaflet.css"
+  >
+  <style>
+    :root {
+      --ink: #e8eaed;
+      --muted: #bdc1c6;
+      --panel: #202124;
+      --surface: #242629;
+      --surface-high: #303134;
+      --line: rgba(232, 234, 237, 0.16);
+      --bg: #171717;
+      --active: #0f766e;
+      --shadow: 0 16px 42px rgba(0, 0, 0, 0.38);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      scrollbar-color: #5f6368 #202124;
+    }
+
+    body {
+      overflow: auto;
+    }
+
+    .app {
+      display: grid;
+      grid-template-columns: minmax(330px, 420px) minmax(0, 1fr);
+      height: 100vh;
+      min-height: 640px;
+    }
+
+    .sidebar {
+      display: flex;
+      min-width: 0;
+      min-height: 0;
+      flex-direction: column;
+      border-right: 1px solid var(--line);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      z-index: 650;
+    }
+
+    .topbar {
+      padding: 18px 18px 14px;
+      border-bottom: 1px solid var(--line);
+      background: var(--surface);
+    }
+
+    .topbar-main {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .title-stack {
+      min-width: 0;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.12;
+      letter-spacing: 0;
+    }
+
+    .trip-meta {
+      display: grid;
+      gap: 6px;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .day-tab,
+    .place-chip {
+      min-width: 0;
+      border: 1px solid var(--line);
+      background: var(--surface-high);
+      color: var(--ink);
+      font: inherit;
+      cursor: pointer;
+      transition: border-color 150ms ease, background 150ms ease, color 150ms ease, transform 150ms ease;
+    }
+
+    .day-tab {
+      height: 38px;
+      border-radius: 7px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .day-tab:hover,
+    .place-chip:hover {
+      border-color: var(--active);
+      background: #35363a;
+      transform: translateY(-1px);
+    }
+
+    .day-tab[aria-pressed="true"] {
+      border-color: var(--day-color);
+      background: var(--day-color);
+      color: #f8fafc;
+    }
+
+    .day-view {
+      min-height: 0;
+      overflow-y: auto;
+      padding: 18px;
+    }
+
+    .day-heading {
+      display: grid;
+      gap: 5px;
+      margin-bottom: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .day-date {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .day-title {
+      margin: 0;
+      font-size: 21px;
+      line-height: 1.18;
+      letter-spacing: 0;
+    }
+
+    .block {
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .block.active {
+      margin-inline: -8px;
+      padding-inline: 8px;
+      border-radius: 7px;
+      background: color-mix(in srgb, var(--active) 8%, transparent);
+    }
+
+    .block:last-child {
+      border-bottom: 0;
+    }
+
+    .block-time {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .block-title {
+      margin: 5px 0 10px;
+      font-size: 16px;
+      line-height: 1.3;
+    }
+
+    .schedule {
+      display: grid;
+      gap: 0;
+      margin: 0 0 6px;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .schedule-row {
+      display: grid;
+      grid-template-columns: minmax(88px, 0.42fr) minmax(0, 1fr);
+      gap: 12px;
+      align-items: baseline;
+      width: 100%;
+      padding: 9px 0;
+      border: 0;
+      border-bottom: 1px solid rgba(232, 234, 237, 0.1);
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+      transition: background 150ms ease, padding 150ms ease;
+    }
+
+    .schedule-row:hover,
+    .schedule-row:focus-visible,
+    .schedule-row.active {
+      padding-inline: 8px;
+      border-radius: 7px;
+      background: color-mix(in srgb, var(--active) 16%, transparent);
+      outline: 0;
+    }
+
+    .schedule-row:last-child {
+      border-bottom: 0;
+    }
+
+    .schedule-time {
+      color: var(--active);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .schedule-title {
+      min-width: 0;
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .place-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      max-width: 100%;
+      min-height: 32px;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.2;
+      text-align: left;
+    }
+
+    .place-chip::before {
+      width: 8px;
+      height: 8px;
+      flex: 0 0 8px;
+      border-radius: 999px;
+      background: var(--chip-color);
+      content: "";
+    }
+
+    .place-chip[data-kind="area"]::before {
+      border-radius: 0;
+      clip-path: polygon(50% 0, 100% 36%, 82% 100%, 18% 100%, 0 36%);
+      opacity: 0.78;
+    }
+
+    .place-chip[data-kind="food_area"]::before {
+      border-radius: 0;
+      background: var(--food-color);
+      clip-path: polygon(50% 0, 100% 22%, 92% 78%, 50% 100%, 8% 78%, 0 22%);
+      opacity: 0.9;
+    }
+
+    .place-chip[data-kind="restaurant"]::before {
+      width: 10px;
+      height: 10px;
+      flex-basis: 10px;
+      border-radius: 3px;
+      background: var(--food-color);
+      clip-path: polygon(50% 0, 62% 34%, 100% 34%, 69% 56%, 82% 100%, 50% 73%, 18% 100%, 31% 56%, 0 34%, 38% 34%);
+    }
+
+    .place-chip[data-kind="line"]::before {
+      border-radius: 2px;
+      opacity: 0.72;
+    }
+
+    .place-chip.active {
+      border-color: var(--chip-color);
+      background: color-mix(in srgb, var(--chip-color) 26%, #111827);
+    }
+
+    .place-name {
+      min-width: 0;
+    }
+
+    .reservation-badge {
+      flex: 0 0 auto;
+      max-width: 86px;
+      padding: 2px 5px;
+      border: 1px solid rgba(253, 214, 99, 0.62);
+      border-radius: 999px;
+      background: rgba(253, 214, 99, 0.14);
+      color: #fdd663;
+      font-size: 10px;
+      font-weight: 900;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .place-chip:disabled {
+      cursor: default;
+      opacity: 0.58;
+      transform: none;
+    }
+
+    .map-wrap {
+      position: relative;
+      min-width: 0;
+      min-height: 0;
+    }
+
+    #map {
+      width: 100%;
+      height: 100%;
+      background: #2b2d30;
+    }
+
+    #map .google-dark-map-tiles {
+      filter: invert(88%) hue-rotate(180deg) brightness(92%) contrast(82%) saturate(58%);
+    }
+
+    #map,
+    #map .leaflet-container,
+    #map .leaflet-grab,
+    #map .leaflet-grab .leaflet-interactive,
+    #map .leaflet-interactive,
+    #map .leaflet-pane > svg path.leaflet-interactive,
+    #map .leaflet-dragging .leaflet-grab,
+    #map .leaflet-dragging .leaflet-grab .leaflet-interactive {
+      cursor: default;
+    }
+
+    .map-tooltip {
+      position: absolute;
+      left: 0;
+      top: 0;
+      max-width: 220px;
+      padding: 6px 8px;
+      border: 1px solid rgba(232, 234, 237, 0.2);
+      border-radius: 4px;
+      background: rgba(248, 250, 252, 0.94);
+      color: #202124;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.22);
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.2;
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-50%, calc(-100% - 12px));
+      transition: opacity 80ms ease;
+      z-index: 720;
+    }
+
+    .map-tooltip.visible {
+      opacity: 1;
+    }
+
+    .legend {
+      display: grid;
+      grid-template-columns: repeat(2, 28px);
+      gap: 4px;
+      width: max-content;
+      padding: 4px;
+      border: 1px solid rgba(232, 234, 237, 0.12);
+      border-radius: 7px;
+      background: rgba(255, 255, 255, 0.045);
+      box-shadow: none;
+      font-size: 10px;
+      font-weight: 700;
+      pointer-events: auto;
+    }
+
+    .type-filter {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      min-height: 0;
+      padding: 0;
+      border: 1px solid rgba(232, 234, 237, 0.12);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.07);
+      color: var(--ink);
+      cursor: pointer;
+      font: inherit;
+      line-height: 1;
+      white-space: nowrap;
+      transition: border-color 150ms ease, background 150ms ease, opacity 150ms ease;
+    }
+
+    .filter-label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+
+    .type-filter:hover,
+    .type-filter:focus-visible {
+      border-color: var(--active);
+      background: rgba(255, 255, 255, 0.1);
+      outline: 0;
+    }
+
+    .type-filter[aria-pressed="true"] {
+      border-color: var(--active);
+      background: rgba(255, 255, 255, 0.11);
+    }
+
+    .type-filter[aria-pressed="false"] {
+      opacity: 0.48;
+      background: rgba(32, 33, 36, 0.34);
+    }
+
+    .transit-map-control {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 730;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 34px;
+      padding: 7px 11px;
+      border: 1px solid rgba(232, 234, 237, 0.22);
+      border-radius: 999px;
+      background: rgba(32, 33, 36, 0.9);
+      color: var(--ink);
+      box-shadow: 0 5px 16px rgba(0, 0, 0, 0.24);
+      cursor: pointer;
+      font: inherit;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    .transit-map-control:hover,
+    .transit-map-control:focus-visible {
+      border-color: #1d9bf0;
+      background: rgba(32, 33, 36, 0.96);
+      outline: 0;
+    }
+
+    .transit-map-control[aria-pressed="true"] {
+      border-color: rgba(29, 155, 240, 0.78);
+      background: rgba(29, 155, 240, 0.18);
+    }
+
+    .transit-estimates-panel {
+      position: absolute;
+      top: 54px;
+      right: 12px;
+      z-index: 730;
+      display: grid;
+      gap: 7px;
+      width: min(300px, calc(100% - 24px));
+      padding: 10px;
+      border: 1px solid rgba(232, 234, 237, 0.18);
+      border-radius: 8px;
+      background: rgba(32, 33, 36, 0.94);
+      color: var(--ink);
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.28);
+      pointer-events: auto;
+    }
+
+    .transit-estimates-panel[hidden] {
+      display: none;
+    }
+
+    .transit-estimate {
+      display: grid;
+      gap: 3px;
+      min-width: 0;
+      padding-bottom: 7px;
+      border-bottom: 1px solid rgba(232, 234, 237, 0.12);
+    }
+
+    .transit-estimate:last-child {
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+
+    .transit-estimate-name {
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 900;
+      line-height: 1.25;
+    }
+
+    .transit-estimate-time {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .booking-panel {
+      display: grid;
+      gap: 10px;
+      width: 100%;
+      max-height: none;
+      overflow: auto;
+      margin: 12px 0 2px;
+      padding: 12px;
+      border: 1px solid rgba(253, 214, 99, 0.34);
+      border-radius: 8px;
+      background: rgba(32, 33, 36, 0.96);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+    }
+
+    .booking-panel[hidden] {
+      display: none;
+    }
+
+    .booking-heading {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .booking-title-wrap {
+      display: grid;
+      gap: 5px;
+      min-width: 0;
+    }
+
+    .booking-kicker {
+      color: #fdd663;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .booking-title {
+      margin: 0;
+      color: var(--ink);
+      font-size: 15px;
+      line-height: 1.2;
+    }
+
+    .booking-close {
+      display: grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      flex: 0 0 28px;
+      border: 1px solid rgba(232, 234, 237, 0.18);
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--ink);
+      cursor: pointer;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .booking-close:hover,
+    .booking-close:focus-visible {
+      border-color: #fdd663;
+      outline: 0;
+    }
+
+    .booking-summary {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .booking-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .booking-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 7px 10px;
+      border: 1px solid rgba(253, 214, 99, 0.48);
+      border-radius: 7px;
+      background: rgba(253, 214, 99, 0.14);
+      color: #fdd663;
+      font-size: 12px;
+      font-weight: 900;
+      text-decoration: none;
+    }
+
+    .booking-link:hover,
+    .booking-link:focus-visible {
+      border-color: #fdd663;
+      background: rgba(253, 214, 99, 0.2);
+      outline: 0;
+    }
+
+    .legend-mark {
+      width: 13px;
+      height: 13px;
+      border: 2px solid var(--active);
+      border-radius: 999px;
+      background: rgba(15, 118, 110, 0.28);
+    }
+
+    .legend-mark.basecamp {
+      border-color: #fdd663;
+      background: #fdd663;
+      clip-path: polygon(50% 0, 92% 35%, 78% 100%, 50% 78%, 22% 100%, 8% 35%);
+    }
+
+    .basecamp-marker {
+      position: relative;
+      width: 30px;
+      height: 34px;
+      transform: translateY(-2px);
+      pointer-events: auto;
+    }
+
+    .basecamp-marker::before {
+      position: absolute;
+      left: 5px;
+      top: 1px;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #202124;
+      border-radius: 7px 7px 7px 2px;
+      background: #fdd663;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.32);
+      content: "";
+      transform: rotate(45deg);
+    }
+
+    .basecamp-marker::after {
+      position: absolute;
+      left: 11px;
+      top: 8px;
+      width: 8px;
+      height: 8px;
+      border-radius: 2px 2px 1px 1px;
+      background: #202124;
+      box-shadow: 0 -4px 0 -1px #202124;
+      content: "";
+      clip-path: polygon(0 42%, 50% 0, 100% 42%, 100% 100%, 0 100%);
+    }
+
+    .basecamp-marker.active::before {
+      border-color: #f8fafc;
+      box-shadow: 0 0 0 3px rgba(253, 214, 99, 0.28), 0 5px 16px rgba(0, 0, 0, 0.38);
+      transform: rotate(45deg) scale(1.12);
+    }
+
+    .restaurant-marker {
+      position: relative;
+      width: 26px;
+      height: 26px;
+      border: 2px solid #202124;
+      border-radius: 9px;
+      background: #ff7043;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.34);
+      pointer-events: auto;
+      transform: rotate(45deg);
+    }
+
+    .restaurant-marker::before,
+    .restaurant-marker::after {
+      position: absolute;
+      background: #f8fafc;
+      content: "";
+      transform: rotate(-45deg);
+    }
+
+    .restaurant-marker::before {
+      left: 7px;
+      top: 5px;
+      width: 3px;
+      height: 13px;
+      border-radius: 2px;
+      box-shadow: 5px 0 0 #f8fafc;
+    }
+
+    .restaurant-marker::after {
+      left: 15px;
+      top: 7px;
+      width: 3px;
+      height: 11px;
+      border-radius: 2px 2px 5px 5px;
+    }
+
+    .restaurant-marker.active {
+      border-color: #f8fafc;
+      box-shadow: 0 0 0 3px rgba(255, 112, 67, 0.32), 0 5px 16px rgba(0, 0, 0, 0.4);
+      transform: rotate(45deg) scale(1.14);
+    }
+
+    .restaurant-marker.needs-reservation {
+      outline: 3px solid rgba(253, 214, 99, 0.72);
+      outline-offset: 2px;
+    }
+
+    .legend-mark.area {
+      border-radius: 0;
+      clip-path: polygon(50% 0, 100% 36%, 82% 100%, 18% 100%, 0 36%);
+    }
+
+    .legend-mark.food {
+      border-color: #ff7043;
+      background: #ff7043;
+      clip-path: polygon(50% 0, 62% 34%, 100% 34%, 69% 56%, 82% 100%, 50% 73%, 18% 100%, 31% 56%, 0 34%, 38% 34%);
+    }
+
+    .legend-mark.reservation {
+      border-color: #fdd663;
+      background: rgba(253, 214, 99, 0.28);
+      box-shadow: inset 0 0 0 2px rgba(32, 33, 36, 0.78);
+    }
+
+    .transit-line-swatch {
+      width: 20px;
+      height: 8px;
+      border-radius: 999px;
+      background: linear-gradient(#f8fafc 0 100%);
+      box-shadow: inset 0 0 0 3px #202124;
+    }
+
+    .legend-mark.route {
+      width: 22px;
+      height: 5px;
+      border: 0;
+      border-radius: 999px;
+      background: var(--active);
+    }
+
+    @media (max-width: 860px) {
+      body {
+        overflow: auto;
+      }
+
+      .app {
+        grid-template-columns: 1fr;
+        grid-template-rows: clamp(300px, 44svh, 430px) auto;
+        height: auto;
+        min-height: 100vh;
+      }
+
+      .map-wrap {
+        grid-row: 1;
+        min-height: 300px;
+        position: sticky;
+        top: 0;
+        z-index: 700;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .sidebar {
+        grid-row: 2;
+        border-top: 1px solid var(--line);
+        border-right: 0;
+        box-shadow: none;
+        z-index: auto;
+      }
+
+      .day-view {
+        overflow: visible;
+        padding: 14px;
+      }
+
+      .topbar {
+        padding: 14px;
+      }
+
+      h1 {
+        font-size: 20px;
+      }
+
+      .trip-meta {
+        font-size: 12px;
+      }
+
+      .tabs {
+        display: flex;
+        gap: 7px;
+        overflow-x: auto;
+        padding-bottom: 2px;
+        scrollbar-width: none;
+      }
+
+      .tabs::-webkit-scrollbar {
+        display: none;
+      }
+
+      .day-tab {
+        flex: 0 0 72px;
+        height: 36px;
+        font-size: 12px;
+      }
+
+      .day-heading {
+        margin-bottom: 12px;
+        padding-bottom: 12px;
+      }
+
+      .day-title {
+        font-size: 19px;
+      }
+
+      .schedule-row {
+        grid-template-columns: minmax(78px, 0.38fr) minmax(0, 1fr);
+        gap: 9px;
+        padding: 8px 0;
+      }
+
+      .schedule-row:hover,
+      .schedule-row:focus-visible,
+      .schedule-row.active {
+        padding-inline: 7px;
+      }
+
+      .schedule-time {
+        font-size: 11px;
+      }
+
+      .schedule-title,
+      .place-chip {
+        font-size: 12px;
+      }
+
+      .block {
+        padding: 12px 0;
+      }
+
+      .block-title {
+        font-size: 15px;
+      }
+
+      .chips {
+        gap: 7px;
+      }
+
+      .place-chip {
+        min-height: 31px;
+        padding: 6px 9px;
+      }
+
+      .map-tooltip {
+        max-width: min(210px, calc(100vw - 24px));
+      }
+    }
+
+    @media (max-width: 520px) {
+      .app {
+        grid-template-rows: clamp(280px, 42svh, 380px) auto;
+      }
+
+      .map-wrap {
+        min-height: 280px;
+      }
+
+      .topbar-main {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .schedule-row {
+        grid-template-columns: 1fr;
+        gap: 2px;
+      }
+      .type-filter {
+        width: 28px;
+        height: 28px;
+        padding: 0;
+      }
+
+      .transit-map-control {
+        top: 10px;
+        right: 10px;
+        min-height: 31px;
+        padding: 6px 9px;
+        font-size: 11px;
+      }
+
+      .transit-estimates-panel {
+        top: 48px;
+        right: 10px;
+        width: min(280px, calc(100% - 20px));
+      }
+    }
+
+    @supports not (background: color-mix(in srgb, red 20%, white)) {
+      .place-chip.active {
+        background: #163233;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <aside class="sidebar" aria-label="Trip itinerary">
+      <header class="topbar">
+        <div class="topbar-main">
+          <div class="title-stack">
+            <h1 id="tripTitle">NYC Trip Map</h1>
+            <div class="trip-meta" id="tripMeta">
+              <div>Arrival: Thu Jul 23, 2026, 05:15 local, Newark</div>
+              <div>Departure: Fri Jul 31, 2026, 07:00, JFK</div>
+            </div>
+          </div>
+          <div class="legend" id="typeFilters" aria-label="Map filters"></div>
+        </div>
+        <nav class="tabs" id="dayTabs" aria-label="Days"></nav>
+      </header>
+      <section class="day-view" id="dayView" aria-live="polite"></section>
+    </aside>
+
+    <section class="map-wrap" aria-label="Map">
+      <div id="map"></div>
+      <button class="transit-map-control" id="transitLayerToggle" type="button" aria-pressed="false" title="Toggle transit layer">
+        <span class="transit-line-swatch" aria-hidden="true"></span>
+        <span>Transit</span>
+      </button>
+      <div class="transit-estimates-panel" id="transitEstimatesPanel" hidden></div>
+      <div class="map-tooltip" id="mapTooltip" aria-hidden="true"></div>
+    </section>
+  </main>
+  <footer class="booking-panel" id="bookingPanel" aria-live="polite" hidden></footer>
+
+  <script
+    src="vendor/leaflet/leaflet.js"
+  ></script>
+  <script>
+    let days = [];
+    let places = {};
+    let itinerary = {};
+    let transit = {};
+
+    async function loadItinerary() {
+      const response = await fetch("nyc-trip-itinerary.json", { cache: "no-store" });
+      if (!response.ok) {
+        throw new Error(`Could not load nyc-trip-itinerary.json (${response.status})`);
+      }
+
+      const data = await response.json();
+      days = data.days || [];
+      places = data.places || {};
+      itinerary = data.itinerary || {};
+      transit = data.transit || {};
+
+      if (!days.length) {
+        throw new Error("nyc-trip-itinerary.json has no days.");
+      }
+
+      const trip = data.trip || {};
+      document.getElementById("tripTitle").textContent = trip.title || "NYC Trip Map";
+      document.getElementById("tripMeta").innerHTML = [
+        trip.arrival,
+        trip.departure
+      ].filter(Boolean).map((line) => `<div>${escapeHtml(line)}</div>`).join("");
+
+      renderTabs();
+      renderTypeFilters();
+      setDay(dayIdFromUrl() || days[0].id, { replaceUrl: true });
+    }
+
+    function showLoadError(error) {
+      console.error(error);
+      document.getElementById("dayTabs").innerHTML = "";
+      document.getElementById("dayView").innerHTML = `
+        <div class="day-heading">
+          <div class="day-date">JSON load failed</div>
+          <h2 class="day-title">Run serve_nyc_trip_map.py, then open the localhost URL.</h2>
+        </div>
+        <article class="block">
+          <div class="block-time">File</div>
+          <h3 class="block-title">nyc-trip-itinerary.json</h3>
+        </article>
+      `;
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, (character) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        "\"": "&quot;",
+        "'": "&#39;"
+      })[character]);
+    }
+
+    function dayById(dayId) {
+      const numericDayId = Number(dayId);
+      return days.find((entry) => entry.id === numericDayId);
+    }
+
+    function dayIdFromUrl() {
+      const hashMatch = window.location.hash.match(/^#day-(\d+)$/i);
+      const queryDay = new URL(window.location.href).searchParams.get("day");
+      const dayId = hashMatch ? Number(hashMatch[1]) : Number(queryDay);
+      return dayById(dayId) ? dayId : null;
+    }
+
+    function writeDayToUrl(dayId, replaceUrl = false) {
+      const url = new URL(window.location.href);
+      url.hash = `day-${dayId}`;
+      if (url.href === window.location.href) return;
+      const method = replaceUrl ? "replaceState" : "pushState";
+      window.history[method]({ dayId }, "", url);
+    }
+
+    function syncDayFromUrl() {
+      if (!days.length) return;
+      const dayId = dayIdFromUrl() || days[0].id;
+      if (dayId !== activeDay) {
+        setDay(dayId, { updateUrl: false });
+      }
+    }
+
+    const map = L.map("map", {
+      zoomControl: true,
+      scrollWheelZoom: true
+    }).setView([40.751, -73.987], 12);
+    map.attributionControl.setPrefix(false);
+
+    L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+      maxZoom: 19,
+      className: "google-dark-map-tiles",
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+    }).addTo(map);
+
+    const layerGroup = L.layerGroup().addTo(map);
+    const routeGroup = L.layerGroup().addTo(map);
+    const transitGroup = L.layerGroup().addTo(map);
+    const layersById = new Map();
+    let transitLayers = [];
+    const mapWrap = document.querySelector(".map-wrap");
+    const mapTooltip = document.getElementById("mapTooltip");
+    const transitLayerToggle = document.getElementById("transitLayerToggle");
+    const transitEstimatesPanel = document.getElementById("transitEstimatesPanel");
+    const bookingPanel = document.getElementById("bookingPanel");
+    const BASECAMP_ID = "arlo_midtown";
+    const BASECAMP_COLOR = "#fdd663";
+    const FOOD_COLOR = "#ff7043";
+    const FOOD_AREA_COLOR = "#ff8a65";
+    const TRANSIT_CORE_COLOR = "#202124";
+    const TRANSIT_CASING_COLOR = "#f8fafc";
+    const TYPE_FILTERS = [
+      { id: "food", label: "Food", markerClass: "food" },
+      { id: "area", label: "Area", markerClass: "area" },
+      { id: "activity", label: "Activity", markerClass: "" },
+      { id: "reservation", label: "Reserve", markerClass: "reservation" }
+    ];
+    const MANHATTAN_GRID_BEARING = 29;
+    const MANHATTAN_GRID_AREA_IDS = new Set([
+      "bryant_park",
+      "rockefeller_center",
+      "hells_kitchen",
+      "koreatown",
+      "times_square",
+      "central_park",
+      "upper_west_side",
+      "lincoln_center",
+      "theater_district",
+      "hudson_yards",
+      "meatpacking",
+      "upper_east_side",
+      "madison_fifth",
+      "soho",
+      "nolita",
+      "chinatown",
+      "canal_area",
+      "lower_east_side",
+      "little_italy",
+      "harlem",
+      "morningside_heights",
+      "columbia",
+      "east_village"
+    ]);
+    let activeDay = 1;
+    let activePlaceId = null;
+    let activeBlockIndex = null;
+    let activeBookingPlaceId = null;
+    let tooltipCloseTimer = null;
+    let activeTypeFilter = null;
+    let showTransitLayer = false;
+
+    function basecampIcon(active = false) {
+      return L.divIcon({
+        className: active ? "basecamp-marker active" : "basecamp-marker",
+        html: "",
+        iconSize: [30, 34],
+        iconAnchor: [15, 29]
+      });
+    }
+
+    function restaurantIcon(place, active = false) {
+      const classes = ["restaurant-marker"];
+      if (active) classes.push("active");
+      if (place && place.reservation) classes.push("needs-reservation");
+      return L.divIcon({
+        className: classes.join(" "),
+        html: "",
+        iconSize: [26, 26],
+        iconAnchor: [13, 13]
+      });
+    }
+
+    function reservationLabel(place) {
+      if (!place || !place.reservation) return "";
+      if (place.reservation === "recommended") return "reserve";
+      if (place.reservation === "ticketed") return "ticket";
+      if (place.reservation === "booked") return "booked";
+      if (place.reservation === "group") return "group";
+      return String(place.reservation);
+    }
+
+    function placeTooltipLabel(place) {
+      const label = reservationLabel(place);
+      return label ? `${place.name} (${label})` : place.name;
+    }
+
+    function bookingLinks(place) {
+      if (!place || place.reservation === "booked") return [];
+      const booking = place && place.booking ? place.booking : {};
+      if (Array.isArray(booking.links)) {
+        return booking.links.filter((link) => link && link.url && link.label);
+      }
+      if (booking.url) {
+        return [
+          {
+            label: booking.label || "Open",
+            url: booking.url
+          }
+        ];
+      }
+      return [];
+    }
+
+    function hideBookingPanel() {
+      bookingPanel.hidden = true;
+      bookingPanel.innerHTML = "";
+      activeBookingPlaceId = null;
+      document.body.classList.remove("booking-panel-open");
+      syncMapAfterBookingPanelChange();
+    }
+
+    function toggleBookingPanelForActivePlace() {
+      if (!activePlaceId) {
+        hideBookingPanel();
+        return;
+      }
+
+      if (!bookingPanel.hidden && activeBookingPlaceId === activePlaceId) {
+        hideBookingPanel();
+        return;
+      }
+
+      showBookingPanel(activePlaceId);
+    }
+
+    function bookingAnchorForPlace(id, anchorElement = null) {
+      if (anchorElement && typeof anchorElement.closest === "function") {
+        return anchorElement.closest(".block");
+      }
+
+      const chip = [...document.querySelectorAll(".place-chip")]
+        .find((element) => element.dataset.placeId === id);
+      return chip ? chip.closest(".block") : document.getElementById("dayView");
+    }
+
+    function showBookingPanel(id, anchorElement = null) {
+      const place = places[id];
+      const reserve = reservationLabel(place);
+      const links = bookingLinks(place);
+      if (!place || !reserve || !links.length) {
+        hideBookingPanel();
+        return;
+      }
+
+      const summary = place.booking && place.booking.summary
+        ? `<p class="booking-summary">${escapeHtml(place.booking.summary)}</p>`
+        : "";
+      bookingPanel.innerHTML = `
+        <div class="booking-heading">
+          <div class="booking-title-wrap">
+            <div class="booking-kicker">${escapeHtml(reserve)}</div>
+            <h3 class="booking-title">${escapeHtml(place.name)}</h3>
+          </div>
+          <button class="booking-close" type="button" aria-label="Close booking panel">x</button>
+        </div>
+        ${summary}
+        <div class="booking-links">
+          ${links.map((link) => `<a class="booking-link" href="${escapeHtml(link.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(link.label)}</a>`).join("")}
+        </div>
+      `;
+      const anchor = bookingAnchorForPlace(id, anchorElement);
+      if (anchor && bookingPanel.parentElement !== anchor) {
+        anchor.appendChild(bookingPanel);
+      }
+      bookingPanel.hidden = false;
+      activeBookingPlaceId = id;
+      document.body.classList.add("booking-panel-open");
+      bookingPanel.querySelector(".booking-close").addEventListener("click", hideBookingPanel);
+      requestAnimationFrame(() => {
+        bookingPanel.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest"
+        });
+      });
+      syncMapAfterBookingPanelChange();
+    }
+
+    function syncMapAfterBookingPanelChange() {
+      requestAnimationFrame(() => {
+        map.invalidateSize({ pan: false });
+      });
+    }
+
+    function displayColor(place, fallbackColor) {
+      if (place.kind === "restaurant") return FOOD_COLOR;
+      if (place.kind === "food_area") return FOOD_AREA_COLOR;
+      return fallbackColor;
+    }
+
+    function isPointPlace(place) {
+      return place.kind === "location" || place.kind === "basecamp" || place.kind === "restaurant";
+    }
+
+    function isAreaPlace(place) {
+      return place.kind === "area" || place.kind === "food_area";
+    }
+
+    function placeType(id, place) {
+      if (id === BASECAMP_ID || place.kind === "basecamp") return "basecamp";
+      if (place.kind === "restaurant" || place.kind === "food_area") return "food";
+      if (place.kind === "area") return "area";
+      return "activity";
+    }
+
+    function isPlaceVisibleByType(id, place) {
+      const type = placeType(id, place);
+      if (type === "basecamp" || !activeTypeFilter) return true;
+      if (activeTypeFilter === "reservation") return Boolean(place.reservation);
+      return type === activeTypeFilter;
+    }
+
+    function visibleRefsForBlock(block) {
+      return (block.refs || []).filter((id) => places[id] && isPlaceVisibleByType(id, places[id]));
+    }
+
+    function renderTypeFilters() {
+      const controls = document.getElementById("typeFilters");
+      controls.innerHTML = TYPE_FILTERS.map((filter) => {
+        const pressed = activeTypeFilter === filter.id;
+        const markerClass = filter.markerClass ? ` ${filter.markerClass}` : "";
+        return `
+          <button class="type-filter" type="button" data-type="${escapeHtml(filter.id)}" aria-label="${escapeHtml(filter.label)}" title="${escapeHtml(filter.label)}" aria-pressed="${pressed}">
+            <span class="legend-mark${markerClass}"></span><span class="filter-label">${escapeHtml(filter.label)}</span>
+          </button>
+        `;
+      }).join("");
+
+      controls.querySelectorAll(".type-filter").forEach((button) => {
+        button.addEventListener("click", () => {
+          const type = button.dataset.type;
+          activeTypeFilter = activeTypeFilter === type ? null : type;
+          applyTypeFilters();
+        });
+      });
+    }
+
+    transitLayerToggle.addEventListener("click", () => {
+      showTransitLayer = !showTransitLayer;
+      transitLayerToggle.setAttribute("aria-pressed", String(showTransitLayer));
+      closeAllTooltips();
+      refreshTransitLayer();
+    });
+    L.DomEvent.disableClickPropagation(transitLayerToggle);
+    L.DomEvent.disableClickPropagation(transitEstimatesPanel);
+
+    function applyTypeFilters() {
+      activePlaceId = null;
+      activeBlockIndex = null;
+      hideBookingPanel();
+      closeAllTooltips();
+      renderTypeFilters();
+      renderDayView(activeDay);
+      drawVisibleDay();
+    }
+
+    function closeAllTooltips() {
+      window.clearTimeout(tooltipCloseTimer);
+      mapTooltip.classList.remove("visible");
+    }
+
+    function positionMapTooltip(originalEvent) {
+      if (!originalEvent) return;
+      const wrapRect = mapWrap.getBoundingClientRect();
+      mapTooltip.style.left = `${originalEvent.clientX - wrapRect.left}px`;
+      mapTooltip.style.top = `${originalEvent.clientY - wrapRect.top}px`;
+    }
+
+    function showMapTooltip(label, originalEvent) {
+      window.clearTimeout(tooltipCloseTimer);
+      mapTooltip.textContent = label;
+      positionMapTooltip(originalEvent);
+      mapTooltip.classList.add("visible");
+    }
+
+    function scheduleTooltipClose() {
+      window.clearTimeout(tooltipCloseTimer);
+      tooltipCloseTimer = window.setTimeout(closeAllTooltips, 80);
+    }
+
+    map.on("click", () => {
+      closeAllTooltips();
+      toggleBookingPanelForActivePlace();
+    });
+    map.on("dragstart zoomstart", closeAllTooltips);
+    map.getContainer().addEventListener("mouseleave", scheduleTooltipClose);
+    document.addEventListener("click", (event) => {
+      const target = event.target;
+      if (!target || typeof target.closest !== "function") return;
+      if (target.closest(".booking-panel, .map-wrap, .place-chip, .schedule-row, .day-tab, .leaflet-interactive, .leaflet-marker-icon, .leaflet-control, a, button")) {
+        return;
+      }
+      toggleBookingPanelForActivePlace();
+    });
+    document.addEventListener("pointermove", (event) => {
+      const target = document.elementFromPoint(event.clientX, event.clientY);
+      if (
+        mapTooltip.classList.contains("visible") &&
+        (!target || typeof target.closest !== "function" || !target.closest(".leaflet-interactive"))
+      ) {
+        closeAllTooltips();
+      }
+    }, { passive: true });
+
+    function placeCenter(place) {
+      if (place.coords) {
+        const mid = place.coords[Math.floor(place.coords.length / 2)];
+        return L.latLng(mid[0], mid[1]);
+      }
+      if (place.polygon) {
+        return L.latLngBounds(place.polygon).getCenter();
+      }
+      return L.latLng(place.lat, place.lng);
+    }
+
+    function metersPerDegreeLng(lat) {
+      return Math.max(1, 111320 * Math.cos(lat * Math.PI / 180));
+    }
+
+    function metersToLatLng(origin, northMeters, eastMeters) {
+      return [
+        origin.lat + northMeters / 111320,
+        origin.lng + eastMeters / metersPerDegreeLng(origin.lat)
+      ];
+    }
+
+    function manhattanGridPolygon(place) {
+      if (!place.polygon) {
+        return null;
+      }
+
+      const origin = { lat: place.lat, lng: place.lng };
+      const angle = MANHATTAN_GRID_BEARING * Math.PI / 180;
+      const alongNorth = Math.cos(angle);
+      const alongEast = Math.sin(angle);
+      const acrossNorth = -Math.sin(angle);
+      const acrossEast = Math.cos(angle);
+      const projected = place.polygon.map(([lat, lng]) => {
+        const north = (lat - origin.lat) * 111320;
+        const east = (lng - origin.lng) * metersPerDegreeLng(origin.lat);
+        return {
+          along: north * alongNorth + east * alongEast,
+          across: north * acrossNorth + east * acrossEast
+        };
+      });
+      const alongValues = projected.map((point) => point.along);
+      const acrossValues = projected.map((point) => point.across);
+      const length = Math.max(55, Math.max(...alongValues) - Math.min(...alongValues));
+      const width = Math.max(32, Math.max(...acrossValues) - Math.min(...acrossValues));
+      const corners = [
+        [-length / 2, -width / 2],
+        [length / 2, -width / 2],
+        [length / 2, width / 2],
+        [-length / 2, width / 2]
+      ];
+
+      return corners.map(([along, across]) => {
+        const north = along * alongNorth + across * acrossNorth;
+        const east = along * alongEast + across * acrossEast;
+        return metersToLatLng(origin, north, east);
+      });
+    }
+
+    function areaPolygonCoords(id, place) {
+      if (MANHATTAN_GRID_AREA_IDS.has(id)) {
+        const gridPolygon = manhattanGridPolygon(place);
+        if (gridPolygon) {
+          return gridPolygon;
+        }
+      }
+
+      if (place.polygon) {
+        return place.polygon;
+      }
+
+      const sides = place.sides || 7;
+      const radius = place.radius || 360;
+      const metersPerDegreeLat = 111320;
+      const lngMeters = metersPerDegreeLng(place.lat);
+
+      return Array.from({ length: sides }, (_, index) => {
+        const angle = -Math.PI / 2 + (Math.PI * 2 * index / sides);
+        const radiusScale = index % 2 === 0 ? 1.08 : 0.88;
+        const dx = Math.cos(angle) * radius * radiusScale;
+        const dy = Math.sin(angle) * radius * radiusScale;
+        return [
+          place.lat + dy / metersPerDegreeLat,
+          place.lng + dx / lngMeters
+        ];
+      });
+    }
+
+    function normalStyle(place, color) {
+      const layerColor = displayColor(place, color);
+      if (place.kind === "basecamp") {
+        return {
+          radius: 9,
+          color: "#202124",
+          weight: 2,
+          fillColor: BASECAMP_COLOR,
+          fillOpacity: 1,
+          opacity: 1
+        };
+      }
+      if (place.kind === "restaurant") {
+        return {};
+      }
+      if (place.kind === "location") {
+        return {
+          radius: 7,
+          color: "#f1f3f4",
+          weight: 2,
+          fillColor: layerColor,
+          fillOpacity: 0.92,
+          opacity: 1
+        };
+      }
+      if (place.kind === "line") {
+        return {
+          color: layerColor,
+          weight: 4,
+          opacity: 0.5,
+          lineCap: "round",
+          lineJoin: "round"
+        };
+      }
+      return {
+        color: layerColor,
+        weight: 2,
+        fillColor: layerColor,
+        fillOpacity: place.kind === "food_area" ? 0.24 : 0.2,
+        opacity: place.kind === "food_area" ? 0.9 : 0.82
+      };
+    }
+
+    function activeStyle(place, color) {
+      const layerColor = displayColor(place, color);
+      if (place.kind === "basecamp") {
+        return {
+          radius: 13,
+          color: "#f8fafc",
+          weight: 3,
+          fillColor: BASECAMP_COLOR,
+          fillOpacity: 1,
+          opacity: 1
+        };
+      }
+      if (place.kind === "restaurant") {
+        return {};
+      }
+      if (place.kind === "location") {
+        return {
+          radius: 12,
+          color: "#202124",
+          weight: 3,
+          fillColor: layerColor,
+          fillOpacity: 1,
+          opacity: 1
+        };
+      }
+      if (place.kind === "line") {
+        return {
+          color: layerColor,
+          weight: 7,
+          opacity: 0.82,
+          lineCap: "round",
+          lineJoin: "round"
+        };
+      }
+      return {
+        color: "#f1f3f4",
+        weight: 3,
+        fillColor: layerColor,
+        fillOpacity: place.kind === "food_area" ? 0.38 : 0.34,
+        opacity: 1
+      };
+    }
+
+    function makeLayer(id, place, color) {
+      let layer;
+      if (place.kind === "basecamp") {
+        layer = L.marker([place.lat, place.lng], {
+          icon: basecampIcon(false),
+          keyboard: false,
+          zIndexOffset: 1000
+        });
+      } else if (place.kind === "restaurant") {
+        layer = L.marker([place.lat, place.lng], {
+          icon: restaurantIcon(place, false),
+          keyboard: false,
+          zIndexOffset: 900
+        });
+      } else if (place.kind === "line") {
+        layer = L.polyline(place.coords, normalStyle(place, color));
+      } else if (isAreaPlace(place)) {
+        layer = L.polygon(areaPolygonCoords(id, place), normalStyle(place, color));
+      } else {
+        layer = L.circleMarker([place.lat, place.lng], normalStyle(place, color));
+      }
+
+      layer.on("click", (event) => {
+        L.DomEvent.stopPropagation(event);
+        closeAllTooltips();
+        highlightPlace(id, true);
+      });
+      layer.addTo(layerGroup);
+      const layerElement = typeof layer.getElement === "function" ? layer.getElement() : null;
+      if (layerElement) {
+        layerElement.dataset.placeId = id;
+        layerElement.dataset.placeKind = place.kind;
+        layerElement.dataset.placeType = placeType(id, place);
+        const showTooltip = (event) => showMapTooltip(placeTooltipLabel(place), event);
+        layerElement.addEventListener("pointerenter", showTooltip);
+        layerElement.addEventListener("pointermove", positionMapTooltip);
+        layerElement.addEventListener("pointerleave", scheduleTooltipClose);
+        layerElement.addEventListener("mouseenter", showTooltip);
+        layerElement.addEventListener("mousemove", positionMapTooltip);
+        layerElement.addEventListener("mouseleave", scheduleTooltipClose);
+      }
+      if (isAreaPlace(place) && typeof layer.bringToBack === "function") {
+        layer.bringToBack();
+      }
+      if (isPointPlace(place) && typeof layer.bringToFront === "function") {
+        layer.bringToFront();
+      }
+      layersById.set(id, { layer, place, color });
+    }
+
+    function refsForDay(dayId) {
+      return [...new Set([BASECAMP_ID].concat(itinerary[dayId].flatMap((block) => block.refs)))];
+    }
+
+    function displayPlaceForLayer(id, place) {
+      if (id === BASECAMP_ID) {
+        return { ...place, name: `${place.name} basecamp`, kind: "basecamp" };
+      }
+      return place;
+    }
+
+    function renderTabs() {
+      const tabs = document.getElementById("dayTabs");
+      tabs.innerHTML = "";
+      days.forEach((day) => {
+        const button = document.createElement("button");
+        button.className = "day-tab";
+        button.type = "button";
+        button.textContent = day.tab;
+        button.style.setProperty("--day-color", day.color);
+        button.setAttribute("aria-pressed", String(day.id === activeDay));
+        button.addEventListener("click", () => setDay(day.id));
+        tabs.appendChild(button);
+      });
+    }
+
+    function renderDayView(dayId) {
+      const day = days.find((entry) => entry.id === dayId);
+      const view = document.getElementById("dayView");
+      const dayBlocks = itinerary[dayId] || [];
+      const schedule = dayBlocks.map((block, index) => {
+        const blockRefs = block.refs || [];
+        const hidden = blockRefs.length && !visibleRefsForBlock(block).length ? " hidden" : "";
+        return `
+        <button class="schedule-row" type="button" data-block-index="${index}"${hidden}>
+          <div class="schedule-time">${escapeHtml(block.time)}</div>
+          <div class="schedule-title">${escapeHtml(block.title)}</div>
+        </button>
+      `;
+      }).join("");
+      const blocks = dayBlocks.map((block, index) => {
+        const blockRefs = block.refs || [];
+        const hidden = blockRefs.length && !visibleRefsForBlock(block).length ? " hidden" : "";
+        const chips = visibleRefsForBlock(block).map((id) => {
+          const place = places[id];
+          if (!place) {
+            return `<button class="place-chip" type="button" disabled style="--chip-color:${escapeHtml(day.color)}">Missing: ${escapeHtml(id)}</button>`;
+          }
+          const reserve = reservationLabel(place);
+          const reserveBadge = reserve ? `<span class="reservation-badge">${escapeHtml(reserve)}</span>` : "";
+          return `<button class="place-chip" type="button" data-place-id="${escapeHtml(id)}" data-kind="${escapeHtml(place.kind)}" data-type="${escapeHtml(placeType(id, place))}" style="--chip-color:${escapeHtml(displayColor(place, day.color))};--food-color:${FOOD_COLOR}"><span class="place-name">${escapeHtml(place.name)}</span>${reserveBadge}</button>`;
+        }).join("");
+        return `
+          <article class="block" data-block-index="${index}"${hidden}>
+            <div class="block-time">${escapeHtml(block.time)}</div>
+            <h3 class="block-title">${escapeHtml(block.title)}</h3>
+            ${chips ? `<div class="chips">${chips}</div>` : ""}
+          </article>
+        `;
+      }).join("");
+
+      view.innerHTML = `
+        <div class="day-heading">
+          <div class="day-date">${escapeHtml(day.date)}, 2026</div>
+          <h2 class="day-title">${escapeHtml(day.title)}</h2>
+        </div>
+        <section class="schedule" aria-label="Suggested hours">${schedule}</section>
+        ${blocks}
+      `;
+
+      view.querySelectorAll(".schedule-row").forEach((row) => {
+        const index = Number(row.dataset.blockIndex);
+        row.addEventListener("click", () => highlightBlock(index, true));
+      });
+
+      view.querySelectorAll(".place-chip").forEach((chip) => {
+        const id = chip.dataset.placeId;
+        chip.addEventListener("mouseenter", () => highlightPlace(id, false));
+        chip.addEventListener("focus", () => highlightPlace(id, false));
+        chip.addEventListener("click", () => highlightPlace(id, true, chip));
+      });
+    }
+
+    function drawRoute(dayId, color) {
+      const route = [];
+      const addRoutePoint = (point) => {
+        const last = route[route.length - 1];
+        if (!last || last.lat !== point.lat || last.lng !== point.lng) {
+          route.push(point);
+        }
+      };
+
+      const basecamp = places[BASECAMP_ID];
+      if (basecamp && dayId !== 1) {
+        addRoutePoint(L.latLng(basecamp.lat, basecamp.lng));
+      }
+
+      itinerary[dayId].forEach((block) => {
+        block.refs.forEach((id) => {
+          const place = places[id];
+          if (!place) return;
+          if (!isPlaceVisibleByType(id, place)) return;
+          if (place.kind === "location" || place.kind === "restaurant") {
+            addRoutePoint(placeCenter(place));
+            if (dayId === 1 && id === "ewr" && basecamp) {
+              addRoutePoint(L.latLng(basecamp.lat, basecamp.lng));
+            }
+          } else if (place.kind === "line" && Array.isArray(place.coords)) {
+            place.coords.forEach((coord) => addRoutePoint(L.latLng(coord[0], coord[1])));
+          }
+        });
+      });
+
+      if (basecamp && dayId !== 1 && dayId !== 9) {
+        addRoutePoint(L.latLng(basecamp.lat, basecamp.lng));
+      }
+
+      if (route.length > 1) {
+        L.polyline(route, {
+          color,
+          weight: 1.75,
+          opacity: 0.58,
+          dashArray: "5 7",
+          lineCap: "round"
+        }).addTo(routeGroup);
+      }
+    }
+
+    function transitStrokeStyle(route, layerRole) {
+      const isAirport = route.mode === "airport";
+      const isCasing = layerRole === "casing";
+      return {
+        color: isCasing ? TRANSIT_CASING_COLOR : TRANSIT_CORE_COLOR,
+        weight: isCasing ? 8 : 4,
+        opacity: isCasing ? 0.9 : 0.82,
+        dashArray: isAirport ? (isCasing ? "10 9" : "8 11") : "",
+        lineCap: "round",
+        lineJoin: "round",
+        interactive: false
+      };
+    }
+
+    function midpoint(a, b) {
+      return [
+        (a[0] + b[0]) / 2,
+        (a[1] + b[1]) / 2
+      ];
+    }
+
+    function quadraticPoint(start, control, end, t) {
+      const inverse = 1 - t;
+      return [
+        inverse * inverse * start[0] + 2 * inverse * t * control[0] + t * t * end[0],
+        inverse * inverse * start[1] + 2 * inverse * t * control[1] + t * t * end[1]
+      ];
+    }
+
+    function smoothTransitCoords(coords) {
+      if (!Array.isArray(coords) || coords.length < 3) return coords || [];
+
+      const smoothed = [coords[0]];
+      for (let index = 1; index < coords.length - 1; index += 1) {
+        const start = index === 1 ? coords[0] : midpoint(coords[index - 1], coords[index]);
+        const control = coords[index];
+        const end = midpoint(coords[index], coords[index + 1]);
+
+        for (let step = 1; step <= 8; step += 1) {
+          smoothed.push(quadraticPoint(start, control, end, step / 8));
+        }
+      }
+      smoothed.push(coords[coords.length - 1]);
+      return smoothed;
+    }
+
+    function drawTransitLayer(dayId) {
+      transitLayers = [];
+      if (!showTransitLayer) return;
+
+      const routes = transit[String(dayId)] || transit[dayId] || [];
+      routes.forEach((route) => {
+        if (!Array.isArray(route.coords) || route.coords.length < 2) return;
+        const coords = smoothTransitCoords(route.coords);
+        const casing = L.polyline(coords, transitStrokeStyle(route, "casing"));
+        const layer = L.polyline(coords, transitStrokeStyle(route, "core"));
+        const label = route.label || route.name || "Transit";
+        layer.bindTooltip(label, {
+          sticky: true,
+          direction: "top",
+          opacity: 0.92
+        });
+        casing.addTo(transitGroup);
+        layer.addTo(transitGroup);
+        transitLayers.push(casing);
+        transitLayers.push(layer);
+      });
+    }
+
+    function transitRoutesForDay(dayId) {
+      return transit[String(dayId)] || transit[dayId] || [];
+    }
+
+    function renderTransitEstimates(dayId) {
+      if (!showTransitLayer) {
+        transitEstimatesPanel.hidden = true;
+        transitEstimatesPanel.innerHTML = "";
+        return;
+      }
+
+      const routes = transitRoutesForDay(dayId).filter((route) => route && (route.estimate || route.label));
+      if (!routes.length) {
+        transitEstimatesPanel.hidden = true;
+        transitEstimatesPanel.innerHTML = "";
+        return;
+      }
+
+      transitEstimatesPanel.innerHTML = routes.map((route) => `
+        <div class="transit-estimate">
+          <div class="transit-estimate-name">${escapeHtml(route.label || "Transit")}</div>
+          ${route.estimate ? `<div class="transit-estimate-time">${escapeHtml(route.estimate)}</div>` : ""}
+        </div>
+      `).join("");
+      transitEstimatesPanel.hidden = false;
+    }
+
+    function refreshTransitLayer() {
+      transitGroup.clearLayers();
+      transitLayers = [];
+      drawTransitLayer(activeDay);
+      renderTransitEstimates(activeDay);
+    }
+
+    function drawVisibleDay() {
+      const day = days.find((entry) => entry.id === activeDay);
+      if (!day) return;
+
+      layerGroup.clearLayers();
+      routeGroup.clearLayers();
+      transitGroup.clearLayers();
+      transitLayers = [];
+      layersById.clear();
+
+      drawTransitLayer(activeDay);
+      renderTransitEstimates(activeDay);
+      refsForDay(activeDay).forEach((id) => {
+        if (places[id] && isPlaceVisibleByType(id, places[id])) {
+          makeLayer(id, displayPlaceForLayer(id, places[id]), day.color);
+        }
+      });
+      drawRoute(activeDay, day.color);
+      fitVisibleLayers();
+      requestAnimationFrame(() => {
+        map.invalidateSize();
+        fitVisibleLayers();
+      });
+    }
+
+    function setDay(dayId, options = {}) {
+      const day = dayById(dayId);
+      if (!day) return;
+
+      const updateUrl = options.updateUrl !== false;
+      const replaceUrl = Boolean(options.replaceUrl);
+      if (updateUrl) {
+        writeDayToUrl(day.id, replaceUrl);
+      }
+
+      activeDay = day.id;
+      activePlaceId = null;
+      activeBlockIndex = null;
+      hideBookingPanel();
+      document.documentElement.style.setProperty("--active", day.color);
+
+      renderTabs();
+      renderDayView(day.id);
+      drawVisibleDay();
+    }
+
+    window.addEventListener("popstate", syncDayFromUrl);
+    window.addEventListener("hashchange", syncDayFromUrl);
+
+    window.addEventListener("resize", () => {
+      requestAnimationFrame(() => {
+        map.invalidateSize();
+        fitVisibleLayers();
+      });
+    });
+
+    function fitVisibleLayers() {
+      const bounds = L.latLngBounds([]);
+      layersById.forEach(({ layer, place }) => {
+        if (isPointPlace(place)) {
+          bounds.extend(layer.getLatLng());
+        } else if (typeof layer.getBounds === "function") {
+          bounds.extend(layer.getBounds());
+        }
+      });
+
+      if (bounds.isValid()) {
+        map.fitBounds(bounds.pad(0.18), {
+          animate: false,
+          maxZoom: activeDay === 9 ? 11 : 14
+        });
+      }
+    }
+
+    function resetLayerStyles() {
+      layersById.forEach(({ layer, place, color }) => {
+        if (place.kind === "basecamp" && typeof layer.setIcon === "function") {
+          layer.setIcon(basecampIcon(false));
+        } else if (place.kind === "restaurant" && typeof layer.setIcon === "function") {
+          layer.setIcon(restaurantIcon(place, false));
+        } else if (typeof layer.setStyle === "function") {
+          layer.setStyle(normalStyle(place, color));
+        }
+      });
+    }
+
+    function applyActiveLayer(record) {
+      if (record.place.kind === "basecamp" && typeof record.layer.setIcon === "function") {
+        record.layer.setIcon(basecampIcon(true));
+      } else if (record.place.kind === "restaurant" && typeof record.layer.setIcon === "function") {
+        record.layer.setIcon(restaurantIcon(record.place, true));
+      } else if (typeof record.layer.setStyle === "function") {
+        record.layer.setStyle(activeStyle(record.place, record.color));
+      }
+    }
+
+    function restoreLayerOrder() {
+      layersById.forEach(({ layer, place }) => {
+        if (isAreaPlace(place) && typeof layer.bringToBack === "function") {
+          layer.bringToBack();
+        }
+      });
+      layersById.forEach(({ layer, place }) => {
+        if (isPointPlace(place) && typeof layer.bringToFront === "function") {
+          layer.bringToFront();
+        }
+      });
+    }
+
+    function fitLayerIds(ids) {
+      const bounds = L.latLngBounds([]);
+      ids.forEach((id) => {
+        const record = layersById.get(id);
+        if (!record) return;
+        if (isPointPlace(record.place)) {
+          bounds.extend(record.layer.getLatLng());
+        } else if (typeof record.layer.getBounds === "function") {
+          bounds.extend(record.layer.getBounds());
+        }
+      });
+
+      if (bounds.isValid()) {
+        map.fitBounds(bounds.pad(0.28), {
+          animate: true,
+          maxZoom: 15
+        });
+      }
+    }
+
+    function setActiveUi(ids, blockIndex) {
+      const activeIds = new Set(ids);
+      document.querySelectorAll(".place-chip").forEach((chip) => {
+        chip.classList.toggle("active", activeIds.has(chip.dataset.placeId));
+      });
+      document.querySelectorAll(".schedule-row").forEach((row) => {
+        row.classList.toggle("active", Number(row.dataset.blockIndex) === blockIndex);
+      });
+      document.querySelectorAll(".block").forEach((block) => {
+        block.classList.toggle("active", Number(block.dataset.blockIndex) === blockIndex);
+      });
+    }
+
+    function highlightBlock(blockIndex, moveMap) {
+      const block = (itinerary[activeDay] || [])[blockIndex];
+      if (!block) return;
+
+      hideBookingPanel();
+      activeBlockIndex = blockIndex;
+      activePlaceId = null;
+      const ids = block.refs.filter((id) => layersById.has(id));
+      resetLayerStyles();
+      ids.forEach((id) => {
+        const record = layersById.get(id);
+        if (record) {
+          applyActiveLayer(record);
+        }
+      });
+      restoreLayerOrder();
+      setActiveUi(ids, blockIndex);
+      if (moveMap) {
+        fitLayerIds(ids);
+      }
+    }
+
+    function highlightPlace(id, moveMap, anchorElement = null) {
+      const record = layersById.get(id);
+      if (!record) return;
+
+      activePlaceId = id;
+      activeBlockIndex = null;
+      resetLayerStyles();
+      applyActiveLayer(record);
+      if (record.place.kind === "line" && typeof record.layer.bringToFront === "function") {
+        record.layer.bringToFront();
+      }
+      restoreLayerOrder();
+      setActiveUi([id], null);
+
+      if (moveMap) {
+        const isOpenForSelectedPlace = !bookingPanel.hidden && activeBookingPlaceId === id;
+        if (isOpenForSelectedPlace) {
+          hideBookingPanel();
+          return;
+        }
+
+        showBookingPanel(id, anchorElement);
+        if (isPointPlace(record.place)) {
+          map.setView(record.layer.getLatLng(), 15, { animate: true });
+        } else if (typeof record.layer.getBounds === "function") {
+          map.fitBounds(record.layer.getBounds().pad(0.42), {
+            animate: true,
+            maxZoom: 15
+          });
+        }
+      }
+    }
+
+    loadItinerary().catch(showLoadError);
+  </script>
+</body>
+</html>

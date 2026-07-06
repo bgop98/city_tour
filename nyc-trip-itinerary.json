@@ -1,0 +1,2639 @@
+{
+  "trip": {
+    "title": "NYC Trip Map",
+    "arrival": "Arrival: Thu Jul 23, 2026, 05:15 local, Newark",
+    "departure": "Departure: Fri Jul 31, 2026, 07:00, JFK"
+  },
+  "days": [
+    {
+      "id": 1,
+      "tab": "Day 1",
+      "date": "Thu Jul 23",
+      "title": "Arrival, Midtown, MoMA",
+      "color": "#4db6ac"
+    },
+    {
+      "id": 2,
+      "tab": "Day 2",
+      "date": "Fri Jul 24",
+      "title": "Central Park, AMNH, UWS",
+      "color": "#64b5f6"
+    },
+    {
+      "id": 3,
+      "tab": "Day 3",
+      "date": "Sat Jul 25",
+      "title": "Liberty, 9/11, Broadway",
+      "color": "#5c6bc0"
+    },
+    {
+      "id": 4,
+      "tab": "Day 4",
+      "date": "Sun Jul 26",
+      "title": "Intrepid, High Line, Villages",
+      "color": "#9575cd"
+    },
+    {
+      "id": 5,
+      "tab": "Day 5",
+      "date": "Mon Jul 27",
+      "title": "Upper East Side, The Met",
+      "color": "#43a047"
+    },
+    {
+      "id": 6,
+      "tab": "Day 6",
+      "date": "Tue Jul 28",
+      "title": "SoHo, Chinatown, LES",
+      "color": "#4dd0e1"
+    },
+    {
+      "id": 7,
+      "tab": "Day 7",
+      "date": "Wed Jul 29",
+      "title": "Brooklyn Options",
+      "color": "#aed581"
+    },
+    {
+      "id": 8,
+      "tab": "Day 8",
+      "date": "Thu Jul 30",
+      "title": "Uptown, Indoor Anchor, Skyline",
+      "color": "#f06292"
+    },
+    {
+      "id": 9,
+      "tab": "Day 9",
+      "date": "Fri Jul 31",
+      "title": "JFK Departure",
+      "color": "#90a4ae"
+    }
+  ],
+  "places": {
+    "ewr": {
+      "name": "Newark Liberty International Airport",
+      "kind": "location",
+      "lat": 40.6895,
+      "lng": -74.1745
+    },
+    "arlo_midtown": {
+      "name": "Arlo Midtown",
+      "kind": "location",
+      "lat": 40.7548,
+      "lng": -73.9943
+    },
+    "bryant_park": {
+      "name": "Bryant Park",
+      "kind": "area",
+      "lat": 40.7536,
+      "lng": -73.9832,
+      "polygon": [
+        [
+          40.7521,
+          -73.983
+        ],
+        [
+          40.7528,
+          -73.9844
+        ],
+        [
+          40.7549,
+          -73.9834
+        ],
+        [
+          40.7542,
+          -73.9819
+        ]
+      ]
+    },
+    "nypl": {
+      "name": "New York Public Library",
+      "kind": "location",
+      "lat": 40.7532,
+      "lng": -73.9822
+    },
+    "grand_central": {
+      "name": "Grand Central Terminal",
+      "kind": "location",
+      "lat": 40.7527,
+      "lng": -73.9772
+    },
+    "rockefeller_center": {
+      "name": "Rockefeller Center",
+      "kind": "area",
+      "lat": 40.7587,
+      "lng": -73.9787,
+      "polygon": [
+        [
+          40.7571,
+          -73.9794
+        ],
+        [
+          40.7582,
+          -73.9806
+        ],
+        [
+          40.7603,
+          -73.9781
+        ],
+        [
+          40.7591,
+          -73.9768
+        ]
+      ]
+    },
+    "moma": {
+      "name": "MoMA",
+      "kind": "location",
+      "lat": 40.7614,
+      "lng": -73.9776,
+      "reservation": "ticketed",
+      "booking": {
+        "summary": "Timed museum admission.",
+        "links": [
+          {
+            "label": "Buy tickets",
+            "url": "https://www.moma.org/tickets/"
+          }
+        ]
+      }
+    },
+    "empire_state_building": {
+      "name": "Empire State Building Observatory",
+      "kind": "location",
+      "lat": 40.7484,
+      "lng": -73.9857,
+      "reservation": "booked",
+      "booking": {
+        "summary": "Booked for Thu Jul 23, 2026 at 4:30 PM. AM/PM ticket includes same-night return for night views.",
+        "links": [
+          {
+            "label": "Buy ESB tickets",
+            "url": "https://www.esbnyc.com/buy-tickets"
+          },
+          {
+            "label": "CityPASS option",
+            "url": "https://www.citypass.com/new-york"
+          }
+        ]
+      }
+    },
+    "hells_kitchen": {
+      "name": "Hell's Kitchen",
+      "kind": "area",
+      "lat": 40.7624,
+      "lng": -73.9924,
+      "polygon": [
+        [
+          40.7579,
+          -73.995
+        ],
+        [
+          40.7607,
+          -73.9976
+        ],
+        [
+          40.7675,
+          -73.9917
+        ],
+        [
+          40.765,
+          -73.9885
+        ]
+      ]
+    },
+    "koreatown": {
+      "name": "Koreatown",
+      "kind": "area",
+      "lat": 40.7479,
+      "lng": -73.9865,
+      "polygon": [
+        [
+          40.7465,
+          -73.9864
+        ],
+        [
+          40.7473,
+          -73.988
+        ],
+        [
+          40.7492,
+          -73.9868
+        ],
+        [
+          40.7484,
+          -73.9853
+        ]
+      ]
+    },
+    "times_square": {
+      "name": "Times Square",
+      "kind": "area",
+      "lat": 40.758,
+      "lng": -73.9855,
+      "polygon": [
+        [
+          40.757,
+          -73.9862
+        ],
+        [
+          40.7583,
+          -73.9857
+        ],
+        [
+          40.7586,
+          -73.9851
+        ],
+        [
+          40.7573,
+          -73.9856
+        ]
+      ]
+    },
+    "best_bagel_coffee": {
+      "name": "Best Bagel & Coffee",
+      "kind": "restaurant",
+      "lat": 40.7524,
+      "lng": -73.9915
+    },
+    "los_tacos_times_square": {
+      "name": "Los Tacos No. 1 Times Square",
+      "kind": "restaurant",
+      "lat": 40.7575,
+      "lng": -73.9876
+    },
+    "ippudo_5th_avenue": {
+      "name": "Ippudo 5th Avenue",
+      "kind": "restaurant",
+      "lat": 40.7569,
+      "lng": -73.9806
+    },
+    "tonchin_midtown": {
+      "name": "Tonchin New York",
+      "kind": "restaurant",
+      "lat": 40.7507,
+      "lng": -73.9846
+    },
+    "keens": {
+      "name": "Keens Steakhouse",
+      "kind": "restaurant",
+      "lat": 40.7509,
+      "lng": -73.9867,
+      "reservation": "booked",
+      "booking": {
+        "summary": "Booked for Mon Jul 27, 2026 at 7:45 PM after The Met / UES day.",
+        "links": [
+          {
+            "label": "Reserve on Resy (1 person)",
+            "url": "https://resy.com/cities/new-york-ny/venues/keens-steakhouse?date=2026-07-27&seats=1"
+          },
+          {
+            "label": "Keens official site",
+            "url": "https://www.keens.com/"
+          }
+        ]
+      }
+    },
+    "jongro_bbq": {
+      "name": "Jongro BBQ",
+      "kind": "restaurant",
+      "lat": 40.747,
+      "lng": -73.9864
+    },
+    "joe_allen": {
+      "name": "Joe Allen",
+      "kind": "restaurant",
+      "lat": 40.7603,
+      "lng": -73.9891
+    },
+    "empanada_mama_times_square": {
+      "name": "Empanada Mama Times Square",
+      "kind": "restaurant",
+      "lat": 40.7543,
+      "lng": -73.9886
+    },
+    "central_park": {
+      "name": "Central Park",
+      "kind": "area",
+      "lat": 40.7829,
+      "lng": -73.9654,
+      "polygon": [
+        [
+          40.7645,
+          -73.9732
+        ],
+        [
+          40.7681,
+          -73.9819
+        ],
+        [
+          40.8007,
+          -73.9582
+        ],
+        [
+          40.7968,
+          -73.9495
+        ]
+      ]
+    },
+    "columbus_circle": {
+      "name": "Columbus Circle",
+      "kind": "location",
+      "lat": 40.7681,
+      "lng": -73.9819
+    },
+    "central_park_mall": {
+      "name": "The Mall",
+      "kind": "location",
+      "lat": 40.7726,
+      "lng": -73.9716
+    },
+    "bethesda_terrace": {
+      "name": "Bethesda Terrace",
+      "kind": "location",
+      "lat": 40.774,
+      "lng": -73.9707
+    },
+    "bow_bridge": {
+      "name": "Bow Bridge",
+      "kind": "location",
+      "lat": 40.7758,
+      "lng": -73.9718
+    },
+    "amnh": {
+      "name": "American Museum of Natural History",
+      "kind": "location",
+      "lat": 40.7813,
+      "lng": -73.974,
+      "reservation": "booked",
+      "booking": {
+        "summary": "Booked for Fri Jul 24, 2026. Arrive around 10:30 AM; Encounters in the Milky Way timeslot at 1:00 PM.",
+        "links": [
+          {
+            "label": "Buy tickets",
+            "url": "https://tickets.amnh.org/"
+          },
+          {
+            "label": "CityPASS option",
+            "url": "https://www.citypass.com/new-york"
+          }
+        ]
+      }
+    },
+    "upper_west_side": {
+      "name": "Upper West Side",
+      "kind": "area",
+      "lat": 40.787,
+      "lng": -73.9754,
+      "polygon": [
+        [
+          40.7737,
+          -73.9869
+        ],
+        [
+          40.7818,
+          -73.982
+        ],
+        [
+          40.7975,
+          -73.9704
+        ],
+        [
+          40.8006,
+          -73.9627
+        ],
+        [
+          40.7787,
+          -73.9739
+        ]
+      ]
+    },
+    "daily_provisions_uws": {
+      "name": "Daily Provisions UWS",
+      "kind": "restaurant",
+      "lat": 40.7822,
+      "lng": -73.9789
+    },
+    "jacobs_pickles": {
+      "name": "Jacob's Pickles",
+      "kind": "restaurant",
+      "lat": 40.7867,
+      "lng": -73.9755
+    },
+    "maison_pickle": {
+      "name": "Maison Pickle",
+      "kind": "restaurant",
+      "lat": 40.7868,
+      "lng": -73.9773
+    },
+    "the_ribbon_uws": {
+      "name": "The Ribbon UWS",
+      "kind": "restaurant",
+      "lat": 40.7766,
+      "lng": -73.9777
+    },
+    "pj_clarkes_lincoln_square": {
+      "name": "P.J. Clarke's Lincoln Square",
+      "kind": "restaurant",
+      "lat": 40.7718,
+      "lng": -73.9824
+    },
+    "pastrami_queen_uws": {
+      "name": "Pastrami Queen UWS",
+      "kind": "restaurant",
+      "lat": 40.778,
+      "lng": -73.9804
+    },
+    "riverside_park": {
+      "name": "Riverside Park",
+      "kind": "area",
+      "lat": 40.8007,
+      "lng": -73.9726,
+      "polygon": [
+        [
+          40.7728,
+          -73.992
+        ],
+        [
+          40.7785,
+          -73.9888
+        ],
+        [
+          40.8076,
+          -73.9665
+        ],
+        [
+          40.8105,
+          -73.9624
+        ],
+        [
+          40.8038,
+          -73.967
+        ],
+        [
+          40.7755,
+          -73.988
+        ]
+      ]
+    },
+    "lincoln_center": {
+      "name": "Lincoln Center",
+      "kind": "area",
+      "lat": 40.7725,
+      "lng": -73.9835,
+      "polygon": [
+        [
+          40.7705,
+          -73.9854
+        ],
+        [
+          40.7718,
+          -73.987
+        ],
+        [
+          40.775,
+          -73.9838
+        ],
+        [
+          40.7735,
+          -73.9819
+        ]
+      ]
+    },
+    "battery_park": {
+      "name": "Battery Park",
+      "kind": "area",
+      "lat": 40.7033,
+      "lng": -74.017,
+      "polygon": [
+        [
+          40.7003,
+          -74.017
+        ],
+        [
+          40.7015,
+          -74.0198
+        ],
+        [
+          40.7046,
+          -74.019
+        ],
+        [
+          40.7055,
+          -74.016
+        ],
+        [
+          40.7031,
+          -74.0138
+        ]
+      ]
+    },
+    "castle_clinton": {
+      "name": "Castle Clinton",
+      "kind": "location",
+      "lat": 40.7034,
+      "lng": -74.0169
+    },
+    "liberty_island": {
+      "name": "Liberty Island",
+      "kind": "area",
+      "lat": 40.6892,
+      "lng": -74.0445,
+      "polygon": [
+        [
+          40.6868,
+          -74.0455
+        ],
+        [
+          40.6892,
+          -74.0474
+        ],
+        [
+          40.6918,
+          -74.0442
+        ],
+        [
+          40.6895,
+          -74.0416
+        ],
+        [
+          40.6873,
+          -74.0428
+        ]
+      ],
+      "reservation": "booked",
+      "booking": {
+        "summary": "Already booked; use the official ferry operator for changes or extra tickets.",
+        "links": [
+          {
+            "label": "Official ferry",
+            "url": "https://www.cityexperiences.com/new-york/city-cruises/statue/"
+          }
+        ]
+      }
+    },
+    "ellis_island": {
+      "name": "Ellis Island Immigration Museum",
+      "kind": "location",
+      "lat": 40.6995,
+      "lng": -74.0396
+    },
+    "wall_street": {
+      "name": "Wall Street",
+      "kind": "area",
+      "lat": 40.706,
+      "lng": -74.0086,
+      "polygon": [
+        [
+          40.7045,
+          -74.0111
+        ],
+        [
+          40.7057,
+          -74.0127
+        ],
+        [
+          40.7084,
+          -74.0086
+        ],
+        [
+          40.7073,
+          -74.0064
+        ],
+        [
+          40.7049,
+          -74.0075
+        ]
+      ]
+    },
+    "trinity_church": {
+      "name": "Trinity Church",
+      "kind": "location",
+      "lat": 40.7081,
+      "lng": -74.0123
+    },
+    "oculus": {
+      "name": "Oculus",
+      "kind": "location",
+      "lat": 40.7115,
+      "lng": -74.0113
+    },
+    "brookfield_place": {
+      "name": "Brookfield Place",
+      "kind": "location",
+      "lat": 40.7127,
+      "lng": -74.0157
+    },
+    "memorial_911": {
+      "name": "9/11 Memorial",
+      "kind": "area",
+      "lat": 40.7115,
+      "lng": -74.0134,
+      "polygon": [
+        [
+          40.7102,
+          -74.0143
+        ],
+        [
+          40.7113,
+          -74.0155
+        ],
+        [
+          40.7133,
+          -74.0129
+        ],
+        [
+          40.712,
+          -74.0117
+        ]
+      ]
+    },
+    "museum_911": {
+      "name": "9/11 Museum",
+      "kind": "location",
+      "lat": 40.7116,
+      "lng": -74.0125,
+      "reservation": "booked",
+      "booking": {
+        "summary": "Booked for Sat Jul 25, 2026 at 2:00 PM.",
+        "links": [
+          {
+            "label": "Buy tickets",
+            "url": "https://www.911memorial.org/visit/museum-visit/tickets"
+          },
+          {
+            "label": "CityPASS option",
+            "url": "https://www.citypass.com/new-york"
+          }
+        ]
+      }
+    },
+    "pisillo_fidi": {
+      "name": "Pisillo Italian Panini FiDi",
+      "kind": "restaurant",
+      "lat": 40.7107,
+      "lng": -74.0077
+    },
+    "crown_shy": {
+      "name": "Crown Shy",
+      "kind": "restaurant",
+      "lat": 40.7062,
+      "lng": -74.0076
+    },
+    "manhatta": {
+      "name": "Manhatta",
+      "kind": "restaurant",
+      "lat": 40.7072,
+      "lng": -74.009
+    },
+    "theater_district": {
+      "name": "Broadway / Theater District",
+      "kind": "area",
+      "lat": 40.759,
+      "lng": -73.9865,
+      "polygon": [
+        [
+          40.756,
+          -73.9894
+        ],
+        [
+          40.7584,
+          -73.9915
+        ],
+        [
+          40.7645,
+          -73.9874
+        ],
+        [
+          40.762,
+          -73.9841
+        ],
+        [
+          40.7574,
+          -73.986
+        ]
+      ],
+      "reservation": "recommended",
+      "booking": {
+        "summary": "Use lotteries if you are flexible; TKTS is the same-day backup.",
+        "links": [
+          {
+            "label": "Broadway lotteries",
+            "url": "https://lottery.broadwaydirect.com/"
+          },
+          {
+            "label": "TKTS same-day",
+            "url": "https://www.tdf.org/discount-ticket-programs/tkts-by-tdf/"
+          }
+        ]
+      }
+    },
+    "wicked_broadway": {
+      "name": "Wicked at Gershwin Theatre",
+      "kind": "location",
+      "lat": 40.7623,
+      "lng": -73.9852,
+      "reservation": "booked",
+      "booking": {
+        "summary": "Booked for Sat Jul 25, 2026 at 8:00 PM. Orchestra Row L, Seat 112. Tickets will be sent separately by email.",
+        "links": [
+          {
+            "label": "Wicked official tickets",
+            "url": "https://wickedthemusical.com/tickets/"
+          }
+        ]
+      }
+    },
+    "hudson_yards": {
+      "name": "Hudson Yards",
+      "kind": "area",
+      "lat": 40.753,
+      "lng": -74.002,
+      "polygon": [
+        [
+          40.7513,
+          -74.0039
+        ],
+        [
+          40.7533,
+          -74.0051
+        ],
+        [
+          40.7554,
+          -74.0016
+        ],
+        [
+          40.7535,
+          -73.9998
+        ]
+      ]
+    },
+    "intrepid": {
+      "name": "Intrepid Museum",
+      "kind": "location",
+      "lat": 40.7645,
+      "lng": -73.9996,
+      "reservation": "booked",
+      "booking": {
+        "summary": "Booked for Sun Jul 26, 2026 at 1:00 PM.",
+        "links": [
+          {
+            "label": "Buy tickets",
+            "url": "https://www.intrepidmuseum.org/plan-your-visit/buy-tickets"
+          },
+          {
+            "label": "CityPASS option",
+            "url": "https://www.citypass.com/new-york"
+          }
+        ]
+      }
+    },
+    "vessel": {
+      "name": "Vessel exterior",
+      "kind": "location",
+      "lat": 40.7538,
+      "lng": -74.0022
+    },
+    "high_line": {
+      "name": "High Line",
+      "kind": "line",
+      "coords": [
+        [
+          40.754,
+          -74.002
+        ],
+        [
+          40.7477,
+          -74.005
+        ],
+        [
+          40.7426,
+          -74.0062
+        ],
+        [
+          40.7398,
+          -74.0087
+        ]
+      ]
+    },
+    "chelsea_market": {
+      "name": "Chelsea Market",
+      "kind": "location",
+      "lat": 40.7424,
+      "lng": -74.006
+    },
+    "los_tacos_chelsea": {
+      "name": "Los Tacos No. 1 Chelsea Market",
+      "kind": "restaurant",
+      "lat": 40.7422,
+      "lng": -74.0064
+    },
+    "dicksons_farmstand": {
+      "name": "Dickson's Farmstand Meats",
+      "kind": "restaurant",
+      "lat": 40.7424,
+      "lng": -74.006
+    },
+    "whitney": {
+      "name": "Whitney Museum",
+      "kind": "location",
+      "lat": 40.7396,
+      "lng": -74.0089,
+      "reservation": "ticketed",
+      "booking": {
+        "summary": "Timed museum admission.",
+        "links": [
+          {
+            "label": "Buy tickets",
+            "url": "https://whitney.org/tickets"
+          }
+        ]
+      }
+    },
+    "little_island": {
+      "name": "Little Island",
+      "kind": "area",
+      "lat": 40.742,
+      "lng": -74.0102,
+      "polygon": [
+        [
+          40.7408,
+          -74.0101
+        ],
+        [
+          40.7416,
+          -74.0114
+        ],
+        [
+          40.743,
+          -74.0105
+        ],
+        [
+          40.7424,
+          -74.0092
+        ]
+      ]
+    },
+    "pier_57": {
+      "name": "Pier 57 rooftop",
+      "kind": "location",
+      "lat": 40.7431,
+      "lng": -74.01
+    },
+    "hudson_river_park": {
+      "name": "Hudson River Park",
+      "kind": "line",
+      "coords": [
+        [
+          40.7545,
+          -74.01
+        ],
+        [
+          40.7486,
+          -74.0101
+        ],
+        [
+          40.7428,
+          -74.0105
+        ],
+        [
+          40.7357,
+          -74.0116
+        ]
+      ]
+    },
+    "meatpacking": {
+      "name": "Meatpacking District",
+      "kind": "area",
+      "lat": 40.7408,
+      "lng": -74.0079,
+      "polygon": [
+        [
+          40.7389,
+          -74.0084
+        ],
+        [
+          40.7403,
+          -74.0103
+        ],
+        [
+          40.7429,
+          -74.0076
+        ],
+        [
+          40.7414,
+          -74.0056
+        ]
+      ]
+    },
+    "west_village": {
+      "name": "West Village",
+      "kind": "area",
+      "lat": 40.7358,
+      "lng": -74.0036,
+      "polygon": [
+        [
+          40.7318,
+          -74.0056
+        ],
+        [
+          40.7347,
+          -74.0091
+        ],
+        [
+          40.7401,
+          -74.0044
+        ],
+        [
+          40.7371,
+          -73.9999
+        ]
+      ]
+    },
+    "greenwich_village": {
+      "name": "Greenwich Village",
+      "kind": "area",
+      "lat": 40.7336,
+      "lng": -73.9988,
+      "polygon": [
+        [
+          40.7306,
+          -74.0006
+        ],
+        [
+          40.7331,
+          -74.0038
+        ],
+        [
+          40.7376,
+          -73.9992
+        ],
+        [
+          40.735,
+          -73.9955
+        ]
+      ]
+    },
+    "via_carota": {
+      "name": "Via Carota",
+      "kind": "restaurant",
+      "lat": 40.733,
+      "lng": -74.0035
+    },
+    "semma": {
+      "name": "Semma",
+      "kind": "restaurant",
+      "lat": 40.7342,
+      "lng": -74.0029
+    },
+    "minetta_tavern": {
+      "name": "Minetta Tavern",
+      "kind": "restaurant",
+      "lat": 40.7301,
+      "lng": -74.0007
+    },
+    "corner_bistro": {
+      "name": "Corner Bistro",
+      "kind": "restaurant",
+      "lat": 40.738,
+      "lng": -74.0034
+    },
+    "upper_east_side": {
+      "name": "Upper East Side",
+      "kind": "area",
+      "lat": 40.7736,
+      "lng": -73.9566,
+      "polygon": [
+        [
+          40.7643,
+          -73.9725
+        ],
+        [
+          40.7742,
+          -73.9655
+        ],
+        [
+          40.789,
+          -73.9519
+        ],
+        [
+          40.7874,
+          -73.9443
+        ],
+        [
+          40.7686,
+          -73.953
+        ],
+        [
+          40.7616,
+          -73.9581
+        ]
+      ]
+    },
+    "central_park_east": {
+      "name": "Central Park East",
+      "kind": "line",
+      "coords": [
+        [
+          40.7684,
+          -73.9708
+        ],
+        [
+          40.7795,
+          -73.9632
+        ],
+        [
+          40.7905,
+          -73.958
+        ]
+      ]
+    },
+    "conservatory_water": {
+      "name": "Conservatory Water",
+      "kind": "location",
+      "lat": 40.7743,
+      "lng": -73.9667
+    },
+    "fifth_avenue_museums": {
+      "name": "Fifth Avenue museum exteriors",
+      "kind": "line",
+      "coords": [
+        [
+          40.7742,
+          -73.9656
+        ],
+        [
+          40.7794,
+          -73.9632
+        ],
+        [
+          40.7847,
+          -73.9589
+        ],
+        [
+          40.7925,
+          -73.9519
+        ]
+      ]
+    },
+    "met": {
+      "name": "The Met Fifth Avenue",
+      "kind": "location",
+      "lat": 40.7794,
+      "lng": -73.9632,
+      "reservation": "ticketed",
+      "booking": {
+        "summary": "Museum admission for The Met Fifth Avenue.",
+        "links": [
+          {
+            "label": "Buy tickets",
+            "url": "https://engage.metmuseum.org/admission"
+          }
+        ]
+      }
+    },
+    "pastrami_queen_ues": {
+      "name": "Pastrami Queen UES",
+      "kind": "restaurant",
+      "lat": 40.7735,
+      "lng": -73.9605
+    },
+    "jg_melon": {
+      "name": "J.G. Melon",
+      "kind": "restaurant",
+      "lat": 40.7712,
+      "lng": -73.9598
+    },
+    "cote_flatiron": {
+      "name": "COTE Korean Steakhouse",
+      "kind": "restaurant",
+      "lat": 40.7412,
+      "lng": -73.9916,
+      "reservation": "recommended",
+      "booking": {
+        "summary": "Michelin-starred Korean steakhouse anchor. Best value path is the Butcher's Feast. Resy online booking starts at 2 guests and the 1-guest URL redirects to 2, so a solo dinner would need a phone call or walk-in/Undercote backup.",
+        "links": [
+          {
+            "label": "COTE on Resy (2+ online)",
+            "url": "https://resy.com/cities/new-york-ny/venues/cote-nyc?date=2026-07-30&seats=2"
+          },
+          {
+            "label": "COTE dinner menu",
+            "url": "https://www.cotekoreansteakhouse.com/nycdinnermenu"
+          }
+        ]
+      }
+    },
+    "atoboy": {
+      "name": "Atoboy",
+      "kind": "restaurant",
+      "lat": 40.7435,
+      "lng": -73.9845,
+      "reservation": "booked",
+      "booking": {
+        "summary": "Booked for Thu Jul 30, 2026 at 7:00 PM. Dinner is planned as a 90-minute meal.",
+        "links": [
+          {
+            "label": "Reserve on Resy (1 person)",
+            "url": "https://resy.com/cities/new-york-ny/venues/atoboy?date=2026-07-30&seats=1"
+          },
+          {
+            "label": "Atoboy official site",
+            "url": "https://www.atoboynyc.com/"
+          }
+        ]
+      }
+    },
+    "quality_meats": {
+      "name": "Quality Meats",
+      "kind": "restaurant",
+      "lat": 40.7644,
+      "lng": -73.9766,
+      "reservation": "recommended",
+      "booking": {
+        "summary": "Optional third anchor near Central Park South. Rendered OpenTable flow confirms 1 person at 7:00 PM with seating options.",
+        "links": [
+          {
+            "label": "Reserve on OpenTable (1 person)",
+            "url": "https://www.opentable.com/r/quality-meats-reservations-new-york?covers=1&dateTime=2026-07-27T19%3A00%3A00"
+          },
+          {
+            "label": "Quality Meats official site",
+            "url": "https://www.qualitymeatsnyc.com/"
+          }
+        ]
+      }
+    },
+    "roosevelt_tram": {
+      "name": "Roosevelt Island Tram",
+      "kind": "line",
+      "coords": [
+        [
+          40.7615,
+          -73.9641
+        ],
+        [
+          40.7618,
+          -73.9496
+        ]
+      ]
+    },
+    "east_river_views": {
+      "name": "East River views",
+      "kind": "area",
+      "lat": 40.7595,
+      "lng": -73.9535,
+      "polygon": [
+        [
+          40.7575,
+          -73.9549
+        ],
+        [
+          40.7594,
+          -73.957
+        ],
+        [
+          40.7622,
+          -73.9518
+        ],
+        [
+          40.7602,
+          -73.9495
+        ]
+      ]
+    },
+    "madison_fifth": {
+      "name": "Madison / Fifth Avenue stroll",
+      "kind": "area",
+      "lat": 40.7706,
+      "lng": -73.9657,
+      "polygon": [
+        [
+          40.7665,
+          -73.9688
+        ],
+        [
+          40.768,
+          -73.9705
+        ],
+        [
+          40.7749,
+          -73.9647
+        ],
+        [
+          40.7733,
+          -73.9628
+        ]
+      ]
+    },
+    "soho": {
+      "name": "SoHo",
+      "kind": "area",
+      "lat": 40.724,
+      "lng": -74,
+      "polygon": [
+        [
+          40.7207,
+          -74.0029
+        ],
+        [
+          40.7233,
+          -74.0062
+        ],
+        [
+          40.7287,
+          -74.0008
+        ],
+        [
+          40.7257,
+          -73.9964
+        ],
+        [
+          40.7217,
+          -73.9981
+        ]
+      ]
+    },
+    "nolita": {
+      "name": "Nolita",
+      "kind": "area",
+      "lat": 40.7223,
+      "lng": -73.9958,
+      "polygon": [
+        [
+          40.7196,
+          -73.9965
+        ],
+        [
+          40.7213,
+          -73.9988
+        ],
+        [
+          40.7248,
+          -73.9957
+        ],
+        [
+          40.723,
+          -73.9932
+        ]
+      ]
+    },
+    "chinatown": {
+      "name": "Chinatown",
+      "kind": "area",
+      "lat": 40.7158,
+      "lng": -73.997,
+      "polygon": [
+        [
+          40.7122,
+          -73.9986
+        ],
+        [
+          40.7148,
+          -74.0014
+        ],
+        [
+          40.7194,
+          -73.9976
+        ],
+        [
+          40.7174,
+          -73.9935
+        ],
+        [
+          40.7135,
+          -73.9944
+        ]
+      ]
+    },
+    "doyers_street": {
+      "name": "Doyers Street",
+      "kind": "location",
+      "lat": 40.7145,
+      "lng": -73.9983
+    },
+    "canal_area": {
+      "name": "Canal Street area",
+      "kind": "area",
+      "lat": 40.7181,
+      "lng": -74,
+      "polygon": [
+        [
+          40.7161,
+          -74.0012
+        ],
+        [
+          40.7174,
+          -74.003
+        ],
+        [
+          40.7204,
+          -73.9999
+        ],
+        [
+          40.719,
+          -73.998
+        ]
+      ]
+    },
+    "essex_market": {
+      "name": "Essex Market",
+      "kind": "location",
+      "lat": 40.718,
+      "lng": -73.9881
+    },
+    "tenement_museum": {
+      "name": "Tenement Museum",
+      "kind": "location",
+      "lat": 40.7188,
+      "lng": -73.9901
+    },
+    "museum_eldridge_street": {
+      "name": "Museum at Eldridge Street",
+      "kind": "location",
+      "lat": 40.7147,
+      "lng": -73.9937,
+      "reservation": "ticketed",
+      "booking": {
+        "summary": "Reserve museum admission or tours.",
+        "links": [
+          {
+            "label": "Reserve tickets",
+            "url": "https://www.eldridgestreet.org/visit"
+          }
+        ]
+      }
+    },
+    "new_museum": {
+      "name": "New Museum",
+      "kind": "location",
+      "lat": 40.7224,
+      "lng": -73.993,
+      "reservation": "ticketed",
+      "booking": {
+        "summary": "Timed museum admission.",
+        "links": [
+          {
+            "label": "Buy tickets",
+            "url": "https://www.newmuseum.org/tickets"
+          }
+        ]
+      }
+    },
+    "liberty_bagels_noho": {
+      "name": "Liberty Bagels NoHo",
+      "kind": "restaurant",
+      "lat": 40.7272,
+      "lng": -73.9942
+    },
+    "xian_chinatown": {
+      "name": "Xi'an Famous Foods Chinatown",
+      "kind": "restaurant",
+      "lat": 40.7156,
+      "lng": -73.9974
+    },
+    "uncle_lou": {
+      "name": "Uncle Lou",
+      "kind": "restaurant",
+      "lat": 40.716,
+      "lng": -73.9992
+    },
+    "scarrs_pizza": {
+      "name": "Scarr's Pizza",
+      "kind": "restaurant",
+      "lat": 40.7154,
+      "lng": -73.991
+    },
+    "dirt_candy": {
+      "name": "Dirt Candy",
+      "kind": "restaurant",
+      "lat": 40.7179,
+      "lng": -73.9897
+    },
+    "una_pizza": {
+      "name": "Una Pizza Napoletana",
+      "kind": "restaurant",
+      "lat": 40.7215,
+      "lng": -73.9881
+    },
+    "raku_soho": {
+      "name": "Raku SoHo",
+      "kind": "restaurant",
+      "lat": 40.7276,
+      "lng": -74.0025
+    },
+    "katzs": {
+      "name": "Katz's Delicatessen",
+      "kind": "restaurant",
+      "lat": 40.7223,
+      "lng": -73.9874
+    },
+    "lower_east_side": {
+      "name": "Lower East Side",
+      "kind": "area",
+      "lat": 40.715,
+      "lng": -73.9843,
+      "polygon": [
+        [
+          40.7116,
+          -73.9889
+        ],
+        [
+          40.7147,
+          -73.9924
+        ],
+        [
+          40.7217,
+          -73.9864
+        ],
+        [
+          40.7192,
+          -73.9817
+        ],
+        [
+          40.7136,
+          -73.9825
+        ]
+      ]
+    },
+    "little_italy": {
+      "name": "Little Italy",
+      "kind": "area",
+      "lat": 40.7191,
+      "lng": -73.9973,
+      "polygon": [
+        [
+          40.7171,
+          -73.9975
+        ],
+        [
+          40.7183,
+          -73.9992
+        ],
+        [
+          40.7214,
+          -73.9966
+        ],
+        [
+          40.7201,
+          -73.9948
+        ]
+      ]
+    },
+    "brooklyn_bridge": {
+      "name": "Brooklyn Bridge",
+      "kind": "line",
+      "coords": [
+        [
+          40.7123,
+          -74.006
+        ],
+        [
+          40.7061,
+          -73.9969
+        ],
+        [
+          40.7022,
+          -73.9929
+        ]
+      ]
+    },
+    "dumbo": {
+      "name": "DUMBO",
+      "kind": "area",
+      "lat": 40.7033,
+      "lng": -73.9881,
+      "polygon": [
+        [
+          40.7003,
+          -73.9909
+        ],
+        [
+          40.7029,
+          -73.9939
+        ],
+        [
+          40.7062,
+          -73.9891
+        ],
+        [
+          40.7037,
+          -73.9854
+        ]
+      ]
+    },
+    "brooklyn_bridge_park": {
+      "name": "Brooklyn Bridge Park",
+      "kind": "line",
+      "coords": [
+        [
+          40.7048,
+          -73.9954
+        ],
+        [
+          40.7018,
+          -73.9977
+        ],
+        [
+          40.6988,
+          -73.9991
+        ],
+        [
+          40.6949,
+          -74.0014
+        ]
+      ]
+    },
+    "brooklyn_heights_prom": {
+      "name": "Brooklyn Heights Promenade",
+      "kind": "line",
+      "coords": [
+        [
+          40.702,
+          -73.997
+        ],
+        [
+          40.6983,
+          -73.9969
+        ],
+        [
+          40.6957,
+          -73.9972
+        ]
+      ]
+    },
+    "brooklyn_heights": {
+      "name": "Brooklyn Heights",
+      "kind": "area",
+      "lat": 40.696,
+      "lng": -73.9933,
+      "polygon": [
+        [
+          40.6918,
+          -73.9942
+        ],
+        [
+          40.6945,
+          -73.9983
+        ],
+        [
+          40.7014,
+          -73.9949
+        ],
+        [
+          40.6982,
+          -73.9889
+        ],
+        [
+          40.6932,
+          -73.9905
+        ]
+      ]
+    },
+    "julianas": {
+      "name": "Juliana's Pizza",
+      "kind": "restaurant",
+      "lat": 40.7027,
+      "lng": -73.9935
+    },
+    "time_out_market": {
+      "name": "Time Out Market New York",
+      "kind": "restaurant",
+      "lat": 40.7034,
+      "lng": -73.9927
+    },
+    "lindustrie_williamsburg": {
+      "name": "L'Industrie Pizzeria Williamsburg",
+      "kind": "restaurant",
+      "lat": 40.7115,
+      "lng": -73.9575
+    },
+    "transit_museum": {
+      "name": "New York Transit Museum",
+      "kind": "location",
+      "lat": 40.6904,
+      "lng": -73.99
+    },
+    "williamsburg": {
+      "name": "Williamsburg",
+      "kind": "area",
+      "lat": 40.7081,
+      "lng": -73.9571,
+      "polygon": [
+        [
+          40.704,
+          -73.9639
+        ],
+        [
+          40.7096,
+          -73.9692
+        ],
+        [
+          40.7198,
+          -73.9598
+        ],
+        [
+          40.7152,
+          -73.9496
+        ],
+        [
+          40.7058,
+          -73.9525
+        ]
+      ]
+    },
+    "peter_luger": {
+      "name": "Peter Luger Steak House",
+      "kind": "restaurant",
+      "lat": 40.7099,
+      "lng": -73.9626,
+      "reservation": "walk-in",
+      "booking": {
+        "summary": "Solo online reservations are not the clean path here. Best attempt is a late lunch walk-in around 2:30-3:30 PM, or call Brooklyn directly for same-day solo guidance. Bring cash or debit; Brooklyn does not take normal credit cards.",
+        "links": [
+          {
+            "label": "Official reservations page",
+            "url": "https://peterluger.com/pages/locations-reservations"
+          },
+          {
+            "label": "Call Brooklyn",
+            "url": "tel:+17183877400"
+          }
+        ]
+      }
+    },
+    "williamsburg_waterfront": {
+      "name": "Williamsburg waterfront",
+      "kind": "line",
+      "coords": [
+        [
+          40.714,
+          -73.9685
+        ],
+        [
+          40.7183,
+          -73.9656
+        ],
+        [
+          40.7216,
+          -73.9629
+        ]
+      ]
+    },
+    "harlem": {
+      "name": "Harlem",
+      "kind": "area",
+      "lat": 40.8116,
+      "lng": -73.9465,
+      "polygon": [
+        [
+          40.8047,
+          -73.9494
+        ],
+        [
+          40.8091,
+          -73.955
+        ],
+        [
+          40.8195,
+          -73.9464
+        ],
+        [
+          40.8152,
+          -73.9385
+        ]
+      ]
+    },
+    "harlem_shake": {
+      "name": "Harlem Shake",
+      "kind": "restaurant",
+      "lat": 40.8071,
+      "lng": -73.9459
+    },
+    "sylvias": {
+      "name": "Sylvia's",
+      "kind": "restaurant",
+      "lat": 40.8087,
+      "lng": -73.9449
+    },
+    "melbas_harlem": {
+      "name": "Melba's Harlem",
+      "kind": "restaurant",
+      "lat": 40.8029,
+      "lng": -73.9568
+    },
+    "melbas_grand_central": {
+      "name": "Melba's Grand Central",
+      "kind": "restaurant",
+      "lat": 40.7527,
+      "lng": -73.9772
+    },
+    "red_rooster": {
+      "name": "Red Rooster Harlem",
+      "kind": "restaurant",
+      "lat": 40.808,
+      "lng": -73.9448
+    },
+    "morningside_heights": {
+      "name": "Morningside Heights",
+      "kind": "area",
+      "lat": 40.809,
+      "lng": -73.9622,
+      "polygon": [
+        [
+          40.8036,
+          -73.9635
+        ],
+        [
+          40.8062,
+          -73.9671
+        ],
+        [
+          40.8132,
+          -73.9618
+        ],
+        [
+          40.8106,
+          -73.9581
+        ]
+      ]
+    },
+    "columbia": {
+      "name": "Columbia University area",
+      "kind": "area",
+      "lat": 40.8075,
+      "lng": -73.9626,
+      "polygon": [
+        [
+          40.8048,
+          -73.9633
+        ],
+        [
+          40.8064,
+          -73.9654
+        ],
+        [
+          40.8103,
+          -73.9625
+        ],
+        [
+          40.8086,
+          -73.9603
+        ]
+      ]
+    },
+    "apollo": {
+      "name": "Apollo Theater exterior",
+      "kind": "location",
+      "lat": 40.81,
+      "lng": -73.95
+    },
+    "morningside_park": {
+      "name": "Morningside Park edges",
+      "kind": "line",
+      "coords": [
+        [
+          40.8016,
+          -73.9582
+        ],
+        [
+          40.8065,
+          -73.9559
+        ],
+        [
+          40.8115,
+          -73.9533
+        ]
+      ]
+    },
+    "cathedral_st_john": {
+      "name": "Cathedral of St. John the Divine",
+      "kind": "location",
+      "lat": 40.8038,
+      "lng": -73.9619
+    },
+    "mcny": {
+      "name": "Museum of the City of New York",
+      "kind": "location",
+      "lat": 40.7925,
+      "lng": -73.9519,
+      "reservation": "ticketed",
+      "booking": {
+        "summary": "Timed museum admission.",
+        "links": [
+          {
+            "label": "Buy tickets",
+            "url": "https://www.mcny.org/tickets"
+          }
+        ]
+      }
+    },
+    "guggenheim": {
+      "name": "Guggenheim Museum",
+      "kind": "location",
+      "lat": 40.783,
+      "lng": -73.959,
+      "reservation": "ticketed",
+      "booking": {
+        "summary": "Museum admission; reservations are useful for planning.",
+        "links": [
+          {
+            "label": "Buy tickets",
+            "url": "https://www.guggenheim.org/plan-your-visit/tickets"
+          }
+        ]
+      }
+    },
+    "summit": {
+      "name": "SUMMIT One Vanderbilt",
+      "kind": "location",
+      "lat": 40.7527,
+      "lng": -73.9787,
+      "reservation": "ticketed",
+      "booking": {
+        "summary": "Timed observation deck admission.",
+        "links": [
+          {
+            "label": "Buy tickets",
+            "url": "https://summitov.com/tickets/"
+          }
+        ]
+      }
+    },
+    "east_village": {
+      "name": "East Village",
+      "kind": "area",
+      "lat": 40.7272,
+      "lng": -73.9857,
+      "polygon": [
+        [
+          40.7225,
+          -73.9888
+        ],
+        [
+          40.7257,
+          -73.9923
+        ],
+        [
+          40.7318,
+          -73.9868
+        ],
+        [
+          40.7287,
+          -73.982
+        ],
+        [
+          40.724,
+          -73.9835
+        ]
+      ]
+    },
+    "jfk": {
+      "name": "John F. Kennedy International Airport",
+      "kind": "location",
+      "lat": 40.6413,
+      "lng": -73.7781
+    }
+  },
+  "transit": {
+    "1": [
+      {
+        "label": "Airport taxi or ride-hail: Newark to Arlo Midtown",
+        "mode": "airport",
+        "estimate": "Rough airport transfer: 35-70 min depending on traffic.",
+        "coords": [
+          [
+            40.6895,
+            -74.1745
+          ],
+          [
+            40.741,
+            -74.009
+          ],
+          [
+            40.7536,
+            -73.998
+          ],
+          [
+            40.7552,
+            -73.9941
+          ]
+        ]
+      },
+      {
+        "label": "Midtown subway/walk spine: hotel, MoMA, ESB",
+        "mode": "subway",
+        "estimate": "Mostly walk/subway hops: 10-20 min between major stops.",
+        "coords": [
+          [
+            40.7552,
+            -73.9941
+          ],
+          [
+            40.7587,
+            -73.9787
+          ],
+          [
+            40.7484,
+            -73.9857
+          ],
+          [
+            40.7552,
+            -73.9941
+          ]
+        ]
+      }
+    ],
+    "2": [
+      {
+        "label": "Subway spine: Midtown to UWS / AMNH",
+        "mode": "subway",
+        "estimate": "Hotel to Central Park/UWS: 15-25 min; AMNH to Lincoln Center/UWS dinner: 15-25 min.",
+        "coords": [
+          [
+            40.7552,
+            -73.9941
+          ],
+          [
+            40.7681,
+            -73.9819
+          ],
+          [
+            40.7813,
+            -73.9735
+          ],
+          [
+            40.7725,
+            -73.9835
+          ],
+          [
+            40.7552,
+            -73.9941
+          ]
+        ]
+      }
+    ],
+    "3": [
+      {
+        "label": "Subway spine: Midtown, Battery Park, 9/11, Theater District",
+        "mode": "subway",
+        "estimate": "Hotel to Battery Park: 25-35 min; 9/11 area to Theater District: 25-35 min.",
+        "coords": [
+          [
+            40.7552,
+            -73.9941
+          ],
+          [
+            40.704,
+            -74.016
+          ],
+          [
+            40.7115,
+            -74.0134
+          ],
+          [
+            40.7624,
+            -73.9851
+          ],
+          [
+            40.7552,
+            -73.9941
+          ]
+        ]
+      }
+    ],
+    "4": [
+      {
+        "label": "West Side spine: High Line, Chelsea, Intrepid, West Village",
+        "mode": "subway",
+        "estimate": "Morning High Line/Chelsea is mostly walking; Chelsea to Intrepid is 20-30 min by bus/walk; West Village back to hotel: 20-30 min.",
+        "coords": [
+          [
+            40.7552,
+            -73.9941
+          ],
+          [
+            40.754,
+            -74.002
+          ],
+          [
+            40.7424,
+            -74.006
+          ],
+          [
+            40.7645,
+            -73.9996
+          ],
+          [
+            40.7338,
+            -74.005
+          ],
+          [
+            40.7552,
+            -73.9941
+          ]
+        ]
+      }
+    ],
+    "5": [
+      {
+        "label": "East Side spine: UES, The Met, Roosevelt Island / Midtown",
+        "mode": "subway",
+        "estimate": "Hotel to The Met/UES: 25-35 min; UES to Roosevelt Tram/Midtown dinner: 15-30 min.",
+        "coords": [
+          [
+            40.7552,
+            -73.9941
+          ],
+          [
+            40.7794,
+            -73.9632
+          ],
+          [
+            40.7615,
+            -73.9641
+          ],
+          [
+            40.7644,
+            -73.9766
+          ],
+          [
+            40.7552,
+            -73.9941
+          ]
+        ]
+      }
+    ],
+    "6": [
+      {
+        "label": "Downtown spine: NoHo / SoHo, Chinatown, LES, Theater District",
+        "mode": "subway",
+        "estimate": "Hotel to SoHo/NoHo: 20-30 min; LES/Chinatown to Theater District: 20-35 min.",
+        "coords": [
+          [
+            40.7552,
+            -73.9941
+          ],
+          [
+            40.725,
+            -73.995
+          ],
+          [
+            40.7158,
+            -73.997
+          ],
+          [
+            40.722,
+            -73.987
+          ],
+          [
+            40.759,
+            -73.9865
+          ],
+          [
+            40.7552,
+            -73.9941
+          ]
+        ]
+      }
+    ],
+    "7": [
+      {
+        "label": "Brooklyn spine: bridge, DUMBO, Transit Museum / Williamsburg",
+        "mode": "subway",
+        "estimate": "Hotel to Brooklyn Bridge: 20-30 min; Brooklyn to Williamsburg: 20-35 min; return to hotel: 25-40 min.",
+        "coords": [
+          [
+            40.7552,
+            -73.9941
+          ],
+          [
+            40.7061,
+            -74.0088
+          ],
+          [
+            40.7033,
+            -73.9881
+          ],
+          [
+            40.6905,
+            -73.9899
+          ],
+          [
+            40.7152,
+            -73.9496
+          ],
+          [
+            40.7099,
+            -73.9626
+          ],
+          [
+            40.7552,
+            -73.9941
+          ]
+        ]
+      }
+    ],
+    "8": [
+      {
+        "label": "Flexible uptown spine: Harlem, MCNY / Guggenheim, Midtown",
+        "mode": "subway",
+        "estimate": "Hotel to Harlem: 25-35 min; Harlem to museum options: 15-30 min; return to Midtown: 20-30 min.",
+        "coords": [
+          [
+            40.7552,
+            -73.9941
+          ],
+          [
+            40.8116,
+            -73.9465
+          ],
+          [
+            40.7925,
+            -73.9519
+          ],
+          [
+            40.783,
+            -73.959
+          ],
+          [
+            40.7527,
+            -73.9787
+          ],
+          [
+            40.7552,
+            -73.9941
+          ]
+        ]
+      }
+    ],
+    "9": [
+      {
+        "label": "Airport taxi or ride-hail: Arlo Midtown to JFK",
+        "mode": "airport",
+        "estimate": "Early-morning airport transfer: roughly 35-60 min; leave extra buffer for JFK.",
+        "coords": [
+          [
+            40.7552,
+            -73.9941
+          ],
+          [
+            40.741,
+            -73.94
+          ],
+          [
+            40.677,
+            -73.83
+          ],
+          [
+            40.6413,
+            -73.7781
+          ]
+        ]
+      }
+    ]
+  },
+  "itinerary": {
+    "1": [
+      {
+        "time": "Morning",
+        "title": "Arrival, transfer, bag drop, Midtown walk",
+        "refs": [
+          "ewr",
+          "bryant_park",
+          "nypl",
+          "grand_central",
+          "rockefeller_center"
+        ]
+      },
+      {
+        "time": "Late morning",
+        "title": "Light breakfast or quick meat-first lunch near Midtown",
+        "refs": [
+          "best_bagel_coffee",
+          "los_tacos_times_square"
+        ]
+      },
+      {
+        "time": "13:00-15:00",
+        "title": "MoMA sampler",
+        "refs": [
+          "moma"
+        ]
+      },
+      {
+        "time": "16:30-17:30",
+        "title": "Empire State Building daytime view (booked 4:30 PM)",
+        "refs": [
+          "empire_state_building"
+        ]
+      },
+      {
+        "time": "18:00-20:00",
+        "title": "Dinner and short after-dark walk",
+        "refs": [
+          "hells_kitchen",
+          "koreatown",
+          "times_square",
+          "ippudo_5th_avenue",
+          "tonchin_midtown",
+          "jongro_bbq"
+        ]
+      },
+      {
+        "time": "21:00-22:00",
+        "title": "Empire State Building same-night return",
+        "refs": [
+          "empire_state_building"
+        ]
+      }
+    ],
+    "2": [
+      {
+        "time": "08:00-08:30",
+        "title": "Light breakfast near the Upper West Side",
+        "refs": [
+          "daily_provisions_uws"
+        ]
+      },
+      {
+        "time": "08:30-10:00",
+        "title": "Central Park before peak heat",
+        "refs": [
+          "central_park",
+          "columbus_circle",
+          "central_park_mall",
+          "bethesda_terrace",
+          "bow_bridge"
+        ]
+      },
+      {
+        "time": "10:30-15:00",
+        "title": "AMNH science block (arrive 10:30, Milky Way 1:00 PM)",
+        "refs": [
+          "amnh"
+        ]
+      },
+      {
+        "time": "Lunch",
+        "title": "Meat-friendly lunch options near AMNH / UWS",
+        "refs": [
+          "jacobs_pickles",
+          "pastrami_queen_uws"
+        ]
+      },
+      {
+        "time": "15:30-18:30",
+        "title": "Upper West Side, Riverside Park, or Lincoln Center",
+        "refs": [
+          "upper_west_side",
+          "riverside_park",
+          "lincoln_center"
+        ]
+      },
+      {
+        "time": "Evening",
+        "title": "Upper West Side dinner options",
+        "refs": [
+          "maison_pickle",
+          "the_ribbon_uws",
+          "pj_clarkes_lincoln_square"
+        ]
+      }
+    ],
+    "3": [
+      {
+        "time": "Early",
+        "title": "Quick breakfast before the ferry",
+        "refs": [
+          "best_bagel_coffee"
+        ]
+      },
+      {
+        "time": "Morning",
+        "title": "Leave Midtown for Battery Park and Liberty ferry",
+        "refs": [
+          "battery_park",
+          "castle_clinton"
+        ]
+      },
+      {
+        "time": "Ticketed slot",
+        "title": "Liberty Island short visit",
+        "refs": [
+          "liberty_island"
+        ]
+      },
+      {
+        "time": "12:30-13:30",
+        "title": "Lower Manhattan lunch and cool-down",
+        "refs": [
+          "pisillo_fidi",
+          "oculus",
+          "brookfield_place"
+        ]
+      },
+      {
+        "time": "14:00-16:30",
+        "title": "9/11 Memorial and Museum (booked 2:00 PM)",
+        "refs": [
+          "memorial_911",
+          "museum_911"
+        ]
+      },
+      {
+        "time": "16:30-17:30",
+        "title": "Optional Financial District walk",
+        "refs": [
+          "wall_street",
+          "trinity_church",
+          "oculus"
+        ]
+      },
+      {
+        "time": "Evening",
+        "title": "Quick pre-show bite, Wicked at 8:00 PM, late dinner options",
+        "refs": [
+          "los_tacos_times_square",
+          "wicked_broadway",
+          "joe_allen",
+          "jongro_bbq",
+          "empanada_mama_times_square"
+        ]
+      }
+    ],
+    "4": [
+      {
+        "time": "09:00-11:30",
+        "title": "Hudson Yards and High Line while it is cooler",
+        "refs": [
+          "hudson_yards",
+          "vessel",
+          "high_line"
+        ]
+      },
+      {
+        "time": "11:30-12:20",
+        "title": "Chelsea Market lunch options",
+        "refs": [
+          "chelsea_market",
+          "los_tacos_chelsea",
+          "dicksons_farmstand"
+        ]
+      },
+      {
+        "time": "13:00-16:00",
+        "title": "Intrepid Museum midday indoor anchor (booked 1:00 PM)",
+        "refs": [
+          "intrepid"
+        ]
+      },
+      {
+        "time": "16:00-18:30",
+        "title": "Waterfront, Little Island, and Meatpacking",
+        "refs": [
+          "little_island",
+          "pier_57",
+          "hudson_river_park",
+          "meatpacking"
+        ]
+      },
+      {
+        "time": "Evening",
+        "title": "West Village and Greenwich Village dinner options",
+        "refs": [
+          "west_village",
+          "greenwich_village",
+          "via_carota",
+          "semma",
+          "minetta_tavern",
+          "corner_bistro"
+        ]
+      }
+    ],
+    "5": [
+      {
+        "time": "08:30-11:30",
+        "title": "Upper East Side and Central Park East",
+        "refs": [
+          "upper_east_side",
+          "central_park_east",
+          "conservatory_water",
+          "fifth_avenue_museums"
+        ]
+      },
+      {
+        "time": "11:30-12:00",
+        "title": "Quick lunch before The Met",
+        "refs": [
+          "pastrami_queen_ues",
+          "jg_melon"
+        ]
+      },
+      {
+        "time": "12:00-15:30",
+        "title": "The Met",
+        "refs": [
+          "met"
+        ]
+      },
+      {
+        "time": "16:00-Evening",
+        "title": "Roosevelt Island Tram, Madison/Fifth stroll, and Keens at 7:45 PM",
+        "refs": [
+          "roosevelt_tram",
+          "east_river_views",
+          "madison_fifth",
+          "jg_melon",
+          "keens"
+        ]
+      }
+    ],
+    "6": [
+      {
+        "time": "08:00-08:30",
+        "title": "Light breakfast near NoHo / SoHo",
+        "refs": [
+          "liberty_bagels_noho"
+        ]
+      },
+      {
+        "time": "08:30-11:30",
+        "title": "SoHo, Nolita, and Chinatown",
+        "refs": [
+          "soho",
+          "nolita",
+          "chinatown",
+          "doyers_street",
+          "canal_area"
+        ]
+      },
+      {
+        "time": "12:00-13:00",
+        "title": "Chinatown lunch options",
+        "refs": [
+          "chinatown",
+          "xian_chinatown",
+          "uncle_lou",
+          "scarrs_pizza",
+          "essex_market"
+        ]
+      },
+      {
+        "time": "13:00-15:00",
+        "title": "Midday indoor anchor: Eldridge Street or New Museum",
+        "refs": [
+          "museum_eldridge_street",
+          "new_museum",
+          "essex_market"
+        ]
+      },
+      {
+        "time": "15:30-17:30",
+        "title": "Lower East Side, Little Italy, and Nolita",
+        "refs": [
+          "lower_east_side",
+          "little_italy",
+          "nolita",
+          "dirt_candy",
+          "una_pizza",
+          "raku_soho"
+        ]
+      },
+      {
+        "time": "Evening",
+        "title": "Classic deli option, Broadway number 2, late dinner options",
+        "refs": [
+          "katzs",
+          "dirt_candy",
+          "una_pizza",
+          "raku_soho",
+          "theater_district",
+          "joe_allen",
+          "jongro_bbq",
+          "empanada_mama_times_square"
+        ]
+      }
+    ],
+    "7": [
+      {
+        "time": "08:00-10:00",
+        "title": "Brooklyn Bridge, Manhattan to Brooklyn",
+        "refs": [
+          "brooklyn_bridge"
+        ]
+      },
+      {
+        "time": "10:00-12:00",
+        "title": "DUMBO, Brooklyn Bridge Park, Brooklyn Heights Promenade",
+        "refs": [
+          "dumbo",
+          "brooklyn_bridge_park",
+          "brooklyn_heights_prom"
+        ]
+      },
+      {
+        "time": "12:00-12:45",
+        "title": "Light Brooklyn lunch or hold appetite for Peter Luger",
+        "refs": [
+          "brooklyn_heights",
+          "dumbo",
+          "julianas",
+          "time_out_market"
+        ]
+      },
+      {
+        "time": "13:00-14:15",
+        "title": "Option A indoor anchor: New York Transit Museum",
+        "refs": [
+          "transit_museum"
+        ]
+      },
+      {
+        "time": "14:30-15:30",
+        "title": "Peter Luger late-lunch walk-in attempt",
+        "refs": [
+          "peter_luger"
+        ]
+      },
+      {
+        "time": "15:45-18:30",
+        "title": "Williamsburg afternoon, food backup, and waterfront skyline",
+        "refs": [
+          "williamsburg",
+          "lindustrie_williamsburg",
+          "williamsburg_waterfront"
+        ]
+      },
+      {
+        "time": "Evening",
+        "title": "Flexible Brooklyn evening or return to Manhattan",
+        "refs": [
+          "williamsburg",
+          "williamsburg_waterfront"
+        ]
+      }
+    ],
+    "8": [
+      {
+        "time": "08:30-11:30",
+        "title": "Harlem, Morningside Heights, and Columbia area",
+        "refs": [
+          "harlem",
+          "morningside_heights",
+          "columbia",
+          "apollo",
+          "morningside_park",
+          "cathedral_st_john"
+        ]
+      },
+      {
+        "time": "11:30-12:45",
+        "title": "Harlem lunch options",
+        "refs": [
+          "harlem_shake",
+          "melbas_harlem"
+        ]
+      },
+      {
+        "time": "13:00-15:00",
+        "title": "Midday indoor anchor: MCNY or Guggenheim",
+        "refs": [
+          "mcny",
+          "guggenheim"
+        ]
+      },
+      {
+        "time": "16:00-18:00",
+        "title": "Hotel rest, packing buffer, or Midtown reset",
+        "refs": [
+          "bryant_park",
+          "grand_central"
+        ]
+      },
+      {
+        "time": "Evening",
+        "title": "Farewell dinner: Atoboy anchor, Tonchin backup, or early-evening SUMMIT",
+        "refs": [
+          "atoboy",
+          "tonchin_midtown",
+          "summit"
+        ]
+      }
+    ],
+    "9": [
+      {
+        "time": "03:30-04:00",
+        "title": "Car departure from Midtown",
+        "refs": []
+      },
+      {
+        "time": "07:00",
+        "title": "Flight to Las Vegas from JFK",
+        "refs": [
+          "jfk"
+        ]
+      }
+    ]
+  }
+}
