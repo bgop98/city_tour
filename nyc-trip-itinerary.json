@@ -256,6 +256,12 @@
       "lat": 40.7524,
       "lng": -73.9915
     },
+    "black_fox_manhattan_west": {
+      "name": "Black Fox Coffee - Manhattan West",
+      "kind": "coffee",
+      "lat": 40.7533,
+      "lng": -73.9988
+    },
     "los_tacos_times_square": {
       "name": "Los Tacos No. 1 Times Square",
       "kind": "restaurant",
@@ -673,6 +679,12 @@
       "kind": "restaurant",
       "lat": 40.7107,
       "lng": -74.0077
+    },
+    "suited_fidi": {
+      "name": "Suited",
+      "kind": "coffee",
+      "lat": 40.7097,
+      "lng": -74.0087
     },
     "crown_shy": {
       "name": "Crown Shy",
@@ -1386,6 +1398,24 @@
       "lat": 40.7272,
       "lng": -73.9942
     },
+    "la_cabra_soho": {
+      "name": "La Cabra SoHo",
+      "kind": "coffee",
+      "lat": 40.7242,
+      "lng": -73.996
+    },
+    "coffee_project_east_village": {
+      "name": "Coffee Project NY East Village",
+      "kind": "coffee",
+      "lat": 40.7271,
+      "lng": -73.9836
+    },
+    "abraco": {
+      "name": "Abraco",
+      "kind": "coffee",
+      "lat": 40.7277,
+      "lng": -73.9867
+    },
     "xian_chinatown": {
       "name": "Xi'an Famous Foods Chinatown",
       "kind": "restaurant",
@@ -1607,6 +1637,12 @@
       "kind": "restaurant",
       "lat": 40.7115,
       "lng": -73.9575
+    },
+    "sey_coffee": {
+      "name": "SEY Coffee",
+      "kind": "coffee",
+      "lat": 40.7053,
+      "lng": -73.9337
     },
     "transit_museum": {
       "name": "New York Transit Museum",
@@ -2215,6 +2251,7 @@
         "title": "Light breakfast or quick meat-first lunch near Midtown",
         "refs": [
           "best_bagel_coffee",
+          "black_fox_manhattan_west",
           "los_tacos_times_square"
         ]
       },
@@ -2332,6 +2369,7 @@
         "time": "12:30-13:30",
         "title": "Lower Manhattan lunch and cool-down",
         "refs": [
+          "suited_fidi",
           "pisillo_fidi",
           "oculus",
           "brookfield_place"
@@ -2460,7 +2498,8 @@
         "time": "08:00-08:30",
         "title": "Light breakfast near NoHo / SoHo",
         "refs": [
-          "liberty_bagels_noho"
+          "liberty_bagels_noho",
+          "la_cabra_soho"
         ]
       },
       {
@@ -2501,6 +2540,8 @@
           "lower_east_side",
           "little_italy",
           "nolita",
+          "coffee_project_east_village",
+          "abraco",
           "dirt_candy",
           "una_pizza",
           "raku_soho"
@@ -2567,6 +2608,7 @@
         "title": "Williamsburg afternoon, food backup, and waterfront skyline",
         "refs": [
           "williamsburg",
+          "sey_coffee",
           "lindustrie_williamsburg",
           "williamsburg_waterfront"
         ]

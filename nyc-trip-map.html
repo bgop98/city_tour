@@ -291,6 +291,15 @@
       clip-path: polygon(50% 0, 62% 34%, 100% 34%, 69% 56%, 82% 100%, 50% 73%, 18% 100%, 31% 56%, 0 34%, 38% 34%);
     }
 
+    .place-chip[data-kind="coffee"]::before {
+      width: 10px;
+      height: 10px;
+      flex-basis: 10px;
+      border-radius: 3px 3px 5px 5px;
+      background: var(--coffee-color);
+      box-shadow: inset -2px 0 0 rgba(248, 250, 252, 0.72);
+    }
+
     .place-chip[data-kind="line"]::before {
       border-radius: 2px;
       opacity: 0.72;
@@ -724,6 +733,47 @@
       outline-offset: 2px;
     }
 
+    .coffee-marker {
+      position: relative;
+      width: 24px;
+      height: 24px;
+      border: 2px solid #202124;
+      border-radius: 8px 8px 11px 11px;
+      background: #8d6e63;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.34);
+      pointer-events: auto;
+    }
+
+    .coffee-marker::before {
+      position: absolute;
+      right: -7px;
+      top: 6px;
+      width: 8px;
+      height: 8px;
+      border: 2px solid #f8fafc;
+      border-left: 0;
+      border-radius: 0 8px 8px 0;
+      content: "";
+    }
+
+    .coffee-marker::after {
+      position: absolute;
+      left: 5px;
+      top: 5px;
+      width: 9px;
+      height: 12px;
+      border-radius: 4px;
+      background: rgba(248, 250, 252, 0.9);
+      box-shadow: 5px 0 0 -2px rgba(248, 250, 252, 0.72);
+      content: "";
+    }
+
+    .coffee-marker.active {
+      border-color: #f8fafc;
+      box-shadow: 0 0 0 3px rgba(141, 110, 99, 0.34), 0 5px 16px rgba(0, 0, 0, 0.4);
+      transform: scale(1.14);
+    }
+
     .legend-mark.area {
       border-radius: 0;
       clip-path: polygon(50% 0, 100% 36%, 82% 100%, 18% 100%, 0 36%);
@@ -733,6 +783,13 @@
       border-color: #ff7043;
       background: #ff7043;
       clip-path: polygon(50% 0, 62% 34%, 100% 34%, 69% 56%, 82% 100%, 50% 73%, 18% 100%, 31% 56%, 0 34%, 38% 34%);
+    }
+
+    .legend-mark.coffee {
+      border-color: #8d6e63;
+      border-radius: 3px 3px 5px 5px;
+      background: #8d6e63;
+      box-shadow: inset -2px 0 0 rgba(248, 250, 252, 0.72);
     }
 
     .legend-mark.reservation {
@@ -1066,10 +1123,12 @@
     const BASECAMP_COLOR = "#fdd663";
     const FOOD_COLOR = "#ff7043";
     const FOOD_AREA_COLOR = "#ff8a65";
+    const COFFEE_COLOR = "#8d6e63";
     const TRANSIT_CORE_COLOR = "#202124";
     const TRANSIT_CASING_COLOR = "#f8fafc";
     const TYPE_FILTERS = [
       { id: "food", label: "Food", markerClass: "food" },
+      { id: "coffee", label: "Coffee", markerClass: "coffee" },
       { id: "area", label: "Area", markerClass: "area" },
       { id: "activity", label: "Activity", markerClass: "" },
       { id: "reservation", label: "Reserve", markerClass: "reservation" }
@@ -1126,6 +1185,15 @@
         html: "",
         iconSize: [26, 26],
         iconAnchor: [13, 13]
+      });
+    }
+
+    function coffeeIcon(active = false) {
+      return L.divIcon({
+        className: active ? "coffee-marker active" : "coffee-marker",
+        html: "",
+        iconSize: [24, 24],
+        iconAnchor: [12, 12]
       });
     }
 
@@ -1242,12 +1310,13 @@
 
     function displayColor(place, fallbackColor) {
       if (place.kind === "restaurant") return FOOD_COLOR;
+      if (place.kind === "coffee") return COFFEE_COLOR;
       if (place.kind === "food_area") return FOOD_AREA_COLOR;
       return fallbackColor;
     }
 
     function isPointPlace(place) {
-      return place.kind === "location" || place.kind === "basecamp" || place.kind === "restaurant";
+      return place.kind === "location" || place.kind === "basecamp" || place.kind === "restaurant" || place.kind === "coffee";
     }
 
     function isAreaPlace(place) {
@@ -1257,6 +1326,7 @@
     function placeType(id, place) {
       if (id === BASECAMP_ID || place.kind === "basecamp") return "basecamp";
       if (place.kind === "restaurant" || place.kind === "food_area") return "food";
+      if (place.kind === "coffee") return "coffee";
       if (place.kind === "area") return "area";
       return "activity";
     }
@@ -1463,6 +1533,9 @@
       if (place.kind === "restaurant") {
         return {};
       }
+      if (place.kind === "coffee") {
+        return {};
+      }
       if (place.kind === "location") {
         return {
           radius: 7,
@@ -1506,6 +1579,9 @@
       if (place.kind === "restaurant") {
         return {};
       }
+      if (place.kind === "coffee") {
+        return {};
+      }
       if (place.kind === "location") {
         return {
           radius: 12,
@@ -1547,6 +1623,12 @@
           icon: restaurantIcon(place, false),
           keyboard: false,
           zIndexOffset: 900
+        });
+      } else if (place.kind === "coffee") {
+        layer = L.marker([place.lat, place.lng], {
+          icon: coffeeIcon(false),
+          keyboard: false,
+          zIndexOffset: 890
         });
       } else if (place.kind === "line") {
         layer = L.polyline(place.coords, normalStyle(place, color));
@@ -1634,7 +1716,7 @@
           }
           const reserve = reservationLabel(place);
           const reserveBadge = reserve ? `<span class="reservation-badge">${escapeHtml(reserve)}</span>` : "";
-          return `<button class="place-chip" type="button" data-place-id="${escapeHtml(id)}" data-kind="${escapeHtml(place.kind)}" data-type="${escapeHtml(placeType(id, place))}" style="--chip-color:${escapeHtml(displayColor(place, day.color))};--food-color:${FOOD_COLOR}"><span class="place-name">${escapeHtml(place.name)}</span>${reserveBadge}</button>`;
+          return `<button class="place-chip" type="button" data-place-id="${escapeHtml(id)}" data-kind="${escapeHtml(place.kind)}" data-type="${escapeHtml(placeType(id, place))}" style="--chip-color:${escapeHtml(displayColor(place, day.color))};--food-color:${FOOD_COLOR};--coffee-color:${COFFEE_COLOR}"><span class="place-name">${escapeHtml(place.name)}</span>${reserveBadge}</button>`;
         }).join("");
         return `
           <article class="block" data-block-index="${index}"${hidden}>
@@ -1686,7 +1768,7 @@
           const place = places[id];
           if (!place) return;
           if (!isPlaceVisibleByType(id, place)) return;
-          if (place.kind === "location" || place.kind === "restaurant") {
+          if (place.kind === "location" || place.kind === "restaurant" || place.kind === "coffee") {
             addRoutePoint(placeCenter(place));
             if (dayId === 1 && id === "ewr" && basecamp) {
               addRoutePoint(L.latLng(basecamp.lat, basecamp.lng));
@@ -1895,6 +1977,8 @@
           layer.setIcon(basecampIcon(false));
         } else if (place.kind === "restaurant" && typeof layer.setIcon === "function") {
           layer.setIcon(restaurantIcon(place, false));
+        } else if (place.kind === "coffee" && typeof layer.setIcon === "function") {
+          layer.setIcon(coffeeIcon(false));
         } else if (typeof layer.setStyle === "function") {
           layer.setStyle(normalStyle(place, color));
         }
@@ -1906,6 +1990,8 @@
         record.layer.setIcon(basecampIcon(true));
       } else if (record.place.kind === "restaurant" && typeof record.layer.setIcon === "function") {
         record.layer.setIcon(restaurantIcon(record.place, true));
+      } else if (record.place.kind === "coffee" && typeof record.layer.setIcon === "function") {
+        record.layer.setIcon(coffeeIcon(true));
       } else if (typeof record.layer.setStyle === "function") {
         record.layer.setStyle(activeStyle(record.place, record.color));
       }
