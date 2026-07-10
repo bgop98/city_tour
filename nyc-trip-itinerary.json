@@ -30,7 +30,7 @@
       "id": 4,
       "tab": "Day 4",
       "date": "Sun Jul 26",
-      "title": "Intrepid, High Line, Villages",
+      "title": "Chelsea, High Line, Intrepid",
       "color": "#9575cd"
     },
     {
@@ -44,7 +44,7 @@
       "id": 6,
       "tab": "Day 6",
       "date": "Tue Jul 28",
-      "title": "SoHo, Chinatown, LES",
+      "title": "Villages, SoHo, Chinatown, LES",
       "color": "#4dd0e1"
     },
     {
@@ -1896,6 +1896,26 @@
         ]
       }
     },
+    "un_headquarters": {
+      "name": "United Nations Headquarters guided tour",
+      "kind": "location",
+      "lat": 40.7489,
+      "lng": -73.968,
+      "reservation": "recommended",
+      "booking": {
+        "summary": "Optional one-hour guided tour. Advance online booking is strongly recommended because same-day walk-in tickets are availability-only. A separate UN security registration is required before arrival; plan to arrive 60 minutes before the tour for registration and screening.",
+        "links": [
+          {
+            "label": "Tour information and tickets",
+            "url": "https://www.un.org/en/visit/tour"
+          },
+          {
+            "label": "UN security registration and FAQ",
+            "url": "https://indico.un.org/event/1014617/page/1855-faqs-and-contact-info"
+          }
+        ]
+      }
+    },
     "east_village": {
       "name": "East Village",
       "kind": "area",
@@ -2040,9 +2060,9 @@
     ],
     "4": [
       {
-        "label": "West Side spine: Chelsea, High Line northbound, Intrepid, West Village",
+        "label": "West Side spine: Chelsea, High Line northbound, Intrepid, Hell's Kitchen",
         "mode": "subway",
-        "estimate": "Morning Little Island/Chelsea/High Line is mostly walking south-to-north; Hudson Yards to Intrepid is 15-25 min by bus/walk; West Village back to hotel: 20-30 min.",
+        "estimate": "Morning Little Island/Chelsea/High Line is mostly walking south-to-north; Hudson Yards to Intrepid is 15-25 min by bus/walk; Intrepid to Hell's Kitchen or the hotel is 10-20 min.",
         "coords": [
           [
             40.7552,
@@ -2065,8 +2085,8 @@
             -73.9996
           ],
           [
-            40.7338,
-            -74.005
+            40.7624,
+            -73.9924
           ],
           [
             40.7552,
@@ -2106,17 +2126,21 @@
     ],
     "6": [
       {
-        "label": "Downtown spine: NoHo / SoHo, Chinatown, LES, Theater District",
+        "label": "Downtown spine: West Village, SoHo, Chinatown, LES, optional Theater District",
         "mode": "subway",
-        "estimate": "Hotel to SoHo/NoHo: 20-30 min; LES/Chinatown to Theater District: 20-35 min.",
+        "estimate": "Hotel to the West Village: 20-30 min; the West Village-to-LES route is mostly a west-to-east walk with short breaks; LES to the Theater District, only if a lottery or last-minute ticket works out, is 20-35 min.",
         "coords": [
           [
             40.7552,
             -73.9941
           ],
           [
+            40.7358,
+            -74.0036
+          ],
+          [
             40.725,
-            -73.995
+            -73.998
           ],
           [
             40.7158,
@@ -2176,9 +2200,9 @@
     ],
     "8": [
       {
-        "label": "Flexible uptown spine: Harlem, MCNY / Guggenheim, Midtown",
+        "label": "Flexible spine: Harlem, MCNY / Guggenheim or UN, Midtown",
         "mode": "subway",
-        "estimate": "Hotel to Harlem: 25-35 min; Harlem to museum options: 15-30 min; return to Midtown: 20-30 min.",
+        "estimate": "Hotel to Harlem: 25-35 min; Harlem to MCNY/Guggenheim: 15-30 min. The UN option requires an earlier southbound transfer plus a 60-minute security buffer; UN to the hotel is 15-25 min.",
         "coords": [
           [
             40.7552,
@@ -2195,6 +2219,10 @@
           [
             40.783,
             -73.959
+          ],
+          [
+            40.7489,
+            -73.968
           ],
           [
             40.7527,
@@ -2434,24 +2462,22 @@
       },
       {
         "time": "16:00-18:30",
-        "title": "Hudson River Park, Hell's Kitchen reset, or West Village transfer",
+        "title": "Hudson River Park, Hell's Kitchen, or hotel reset",
         "refs": [
           "hudson_river_park",
           "hells_kitchen",
-          "west_village",
-          "greenwich_village"
+          "arlo_midtown"
         ]
       },
       {
         "time": "Evening",
-        "title": "West Village and Greenwich Village dinner options",
+        "title": "Flexible Hell's Kitchen, Koreatown, or Midtown evening",
         "refs": [
-          "west_village",
-          "greenwich_village",
-          "via_carota",
-          "semma",
-          "minetta_tavern",
-          "corner_bistro"
+          "hells_kitchen",
+          "koreatown",
+          "tonchin_midtown",
+          "jongro_bbq",
+          "empanada_mama_times_square"
         ]
       }
     ],
@@ -2495,17 +2521,19 @@
     ],
     "6": [
       {
-        "time": "08:00-08:30",
-        "title": "Light breakfast near NoHo / SoHo",
+        "time": "08:00-09:30",
+        "title": "West Village and Greenwich Village before the crowds",
         "refs": [
-          "liberty_bagels_noho",
-          "la_cabra_soho"
+          "west_village",
+          "greenwich_village"
         ]
       },
       {
-        "time": "08:30-11:30",
-        "title": "SoHo, Nolita, and Chinatown",
+        "time": "09:30-12:00",
+        "title": "SoHo and Nolita, continuing east to Chinatown",
         "refs": [
+          "liberty_bagels_noho",
+          "la_cabra_soho",
           "soho",
           "nolita",
           "chinatown",
@@ -2535,11 +2563,10 @@
       },
       {
         "time": "15:30-17:30",
-        "title": "Lower East Side, Little Italy, and Nolita",
+        "title": "Lower East Side and East Village",
         "refs": [
           "lower_east_side",
-          "little_italy",
-          "nolita",
+          "east_village",
           "coffee_project_east_village",
           "abraco",
           "dirt_candy",
@@ -2549,12 +2576,16 @@
       },
       {
         "time": "Evening",
-        "title": "Classic deli option, Broadway number 2, late dinner options",
+        "title": "Downtown dinner options; Village return or Broadway only if worth the transfer",
         "refs": [
           "katzs",
           "dirt_candy",
           "una_pizza",
           "raku_soho",
+          "via_carota",
+          "semma",
+          "minetta_tavern",
+          "corner_bistro",
           "theater_district",
           "joe_allen",
           "jongro_bbq",
@@ -2645,10 +2676,11 @@
       },
       {
         "time": "13:00-15:00",
-        "title": "Midday indoor anchor: MCNY or Guggenheim",
+        "title": "Midday indoor anchor: MCNY, Guggenheim, or optional UN guided tour",
         "refs": [
           "mcny",
-          "guggenheim"
+          "guggenheim",
+          "un_headquarters"
         ]
       },
       {
