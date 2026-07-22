@@ -1069,6 +1069,34 @@
       })[character]);
     }
 
+    const WEEKDAY_NAMES = {
+      Sun: "Sunday",
+      Mon: "Monday",
+      Tue: "Tuesday",
+      Wed: "Wednesday",
+      Thu: "Thursday",
+      Fri: "Friday",
+      Sat: "Saturday"
+    };
+
+    function ordinalDay(dayOfMonth) {
+      const numericDay = Number(dayOfMonth);
+      const lastTwoDigits = numericDay % 100;
+      if (lastTwoDigits >= 11 && lastTwoDigits <= 13) return `${numericDay}th`;
+      const suffixes = { 1: "st", 2: "nd", 3: "rd" };
+      return `${numericDay}${suffixes[numericDay % 10] || "th"}`;
+    }
+
+    function dayTabLabel(day) {
+      const parts = String(day.date || "").trim().split(/\s+/);
+      const weekday = WEEKDAY_NAMES[parts[0]] || parts[0];
+      const dayOfMonth = Number(parts[2]);
+      if (weekday && Number.isFinite(dayOfMonth)) {
+        return `${weekday} ${ordinalDay(dayOfMonth)}`;
+      }
+      return day.tab || `Day ${day.id}`;
+    }
+
     function dayById(dayId) {
       const numericDayId = Number(dayId);
       return days.find((entry) => entry.id === numericDayId);
@@ -1684,7 +1712,7 @@
         const button = document.createElement("button");
         button.className = "day-tab";
         button.type = "button";
-        button.textContent = day.tab;
+        button.textContent = dayTabLabel(day);
         button.style.setProperty("--day-color", day.color);
         button.setAttribute("aria-pressed", String(day.id === activeDay));
         button.addEventListener("click", () => setDay(day.id));
